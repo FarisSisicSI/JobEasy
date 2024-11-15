@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>JobEasy - Registracija</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 </head>
 <body>
 
-<h1>Registracija</h1>
+<div class="container">
+    <h1>Registracija korisnika</h1>
+
+    <form th:action="@{/korisnici/registracija}" th:object="${korisnik}" method="post">
+        <label for="ime">Ime:</label><br>
+        <input type="text" th:field="*{ime}" id="ime" required/><br>
+
+        <label for="prezime">Prezime:</label><br>
+        <input type="text" th:field="*{prezime}" id="prezime" required/><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" th:field="*{email}" id="email" required/><br>
+
+        <label for="username">Korisničko ime:</label><br>
+        <input type="text" th:field="*{username}" id="username" required/><br>
+
+        <label for="password">Lozinka:</label><br>
+        <input type="password" th:field="*{password}" id="password" required/><br>
+
+        <div>
+            <button type="submit" class="button">Registruj se</button>
+            <a href="/welcome" class="button">Nazad</a>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>

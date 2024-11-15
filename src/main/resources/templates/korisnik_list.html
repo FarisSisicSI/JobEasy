@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>JobEasy - Pregled Korisnika</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Prijava pregled</h1>
+
+    </a>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Radnja</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="korisnik : ${korisnici}">
+            <td th:text="${korisnik.id}"></td>
+            <td th:text="${korisnik.ime}"></td>
+            <td th:text="${korisnik.prezime}"></td>
+            <td th:text="${korisnik.email}"></td>
+            <td th:text="${korisnik.username}"></td>
+            <td>
+                <a th:href="@{/korisnik/edit/{id}(id=${korisnik.id})}" class="button">Uredi</a>
+                <a th:href="@{/korisnici/delete/{id}(id=${korisnik.id})}" class="button">Izbriši</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/welcome" class="button">Nazad</a>
+</div>
+</body>
+</html>

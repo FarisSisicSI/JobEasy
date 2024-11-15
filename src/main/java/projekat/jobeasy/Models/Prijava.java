@@ -1,6 +1,8 @@
 package projekat.jobeasy.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -22,10 +24,13 @@ public class Prijava {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Size(min = 3, max = 20)
     private String ime;
     @NotNull
+    @Size(min = 3, max = 20)
     private String prezime;
     @NotNull
+    @Email
     private String email;
     @NotNull
     private String cv;

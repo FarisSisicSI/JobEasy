@@ -1,6 +1,8 @@
 package projekat.jobeasy.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +13,23 @@ public class Pozicije {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotNull
+    @Size(min = 1, max = 50)
     private String nazivPozicije;
 
     @Lob
+    @NotNull
+    @Size(min = 1)
     private String opisPozicije;
 
     @Lob
+    @NotNull
+    @Size(min = 1)
     private String kvalifikacije;
 
     @Lob
+    @NotNull
+    @Size(min = 1)
     private String odgovornosti;
 
     @ManyToMany(mappedBy = "upisanePozicije")
