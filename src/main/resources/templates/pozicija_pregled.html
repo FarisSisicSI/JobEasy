@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>JobEasy - Pregled pozicije</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+
+<div class="container">
+
+  <h1  th:text="${pozicija.nazivPozicije}"></h1>
+
+
+  <div class="pozicija-sadrzaj">
+    <h2>Opis pozicije</h2>
+    <p class="pozicija-lista" th:text="${pozicija.opisPozicije}"></p>
+
+    <h2>Kvalifikacije</h2>
+    <ul class="pozicija-lista" th:each="kvalifikacija : ${pozicija.kvalifikacije}">
+      <li th:text="${kvalifikacija}"></li>
+    </ul>
+
+    <h2>Odgovornosti</h2>
+    <ul class="pozicija-lista" th:each="odgovornost : ${pozicija.odgovornosti}">
+      <li th:text="${odgovornost}"></li>
+    </ul>
+  </div>
+  <a href="/pozicije" class="button">Natrag na listu pozicija</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('images/download.jpeg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial', sans-serif;
+    color: #333333;
+}
+
+h1 {
+    color: #f0f0f0;
+    font-size: 2.5em;
+    text-align: center;
+    margin: 30px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Dodaje blagu sjenku za bolji kontrast */
+}
+
+p {
+    font-size: 18px;
+    color: #e0e0e0;
+    text-align: left;
+    line-height: 1.6;
+    margin: 20px 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8); /* Blagi sloj za bolji kontrast */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.button {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 10px 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Blagi efekt uvećanja na hover */
+}
+
+a {
+    margin: 10px;
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 6px;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #004a8d; /* Tamnija boja za hover efekt */
+}
+
+
+/* Stil za kontejner liste */
+ul {
+    list-style-type: none; /* Uklanja oznake liste */
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd; /* Tanka linija između stavki */
+}
+
+li span {
+    font-size: 18px;
+    color: #333;
+    flex-grow: 1; /* Omogućava tekstu da zauzme dostupni prostor */
+    text-align: left;
+}
+
+li a {
+    margin-left: 10px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px; /* Razmak između dugmadi */
+}
+
+/* Stil za dugmad */
+.button, li a {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button:hover, li a:hover {
+    background-color: #0056b3;
+}
+
+
+/* Stil za naslov pozicije */
+.pozicija-naslov {
+    color: #007bee;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Stil za glavni kontejner */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Stil za sadržaj unutar jednog diva */
+.pozicija-sadrzaj {
+    color: #333;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+/* Stil za podnaslove u sadržaju */
+.pozicija-sadrzaj h2 {
+    color: #007bee;
+    font-size: 1.5em;
+    margin-top: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* Stil za opis */
+.pozicija-opis {
+    margin-top: 10px;
+    text-align: justify;
+}
+
+/* Stil za liste (kvalifikacije i odgovornosti) */
+.pozicija-lista {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #333;
+    margin-top: 10px;
+    text-align: justify;
+}
+
+.pozicija-lista li {
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 5px 0;
+}
+
+
+

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>JobEasy - Otvorene Pozicije</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+
+<div class="container">
+  <h1>Otvorene pozicije</h1>
+  <ul>
+    <li th:each="pozicija : ${pozicije}">
+      <span th:text="${pozicija.nazivPozicije}"></span>
+      <div class="buttons-container">
+        <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="button">Pregled</a>
+        <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" class="button">Uredi</a>
+        <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" class="button">Izbriši</a>
+      </div>
+    </li>
+    <a href="/welcome" class = "button">Nazad</a>
+    <a href="/pozicije/novapozicija" class = "button">Dodaj poziciju</a>
+  </ul>
+
+</div>
+</body>
+</html>

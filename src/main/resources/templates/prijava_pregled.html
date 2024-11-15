@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>JobEasy - Pregled prijava</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+  <h1>Prijava pregled</h1>
+
+  </a>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Ime</th>
+      <th>Prezime</th>
+      <th>Email</th>
+      <th>CV</th>
+      <th>Radnja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="prijava : ${prijava}">
+      <td th:text="${prijava.id}"></td>
+      <td th:text="${prijava.ime}"></td>
+      <td th:text="${prijava.prezime}"></td>
+      <td th:text="${prijava.email}"></td>
+      <td th:text="${prijava.cv}"></td>
+      <td>
+        <a th:href="@{/prijava/edit/{id}(id=${prijava.id})}" class="button">Uredi</a>
+        <a th:href="@{/prijava/delete/{id}(id=${prijava.id})}" class="button">Izbriši</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a href="/welcome" class="button">Nazad</a>
+</div>
+</body>
+</html>

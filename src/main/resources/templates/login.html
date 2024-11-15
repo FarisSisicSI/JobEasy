@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobEasy - Login</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+  <h1>Login</h1>
+  <p>Molimo vas da se prijavite za nastavak.</p>
+  <form action="#" th:action="@{/login}" method="POST" th:object="${loginForm}">
+    <div class="input-container">
+      <label for="username">Korisničko ime</label>
+      <input type="text" id="username" name="username" th:value="*{username}" required placeholder="Unesite korisničko ime">
+    </div>
+    <div class="input-container">
+      <label for="password">Lozinka</label>
+      <input type="password" id="password" name="password" th:value="*{password}" required placeholder="Unesite lozinku">
+    </div>
+    <button type="submit" class="button">Prijavite se</button>
+  </form>
+  <div class="links">
+    <a href="#" th:href="@{/forgot-password}">Zaboravili ste lozinku?</a>
+    <a href="#" th:href="@{/register}">Nemate nalog? Registrujte se</a>
+  </div>
+</div>
+</body>
+</html>
