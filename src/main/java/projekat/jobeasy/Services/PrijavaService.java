@@ -17,7 +17,7 @@ public class PrijavaService {
     private PrijavaRepository prijavaRepository;
 
     @Autowired
-    private PozicijaRepository pozicijaRepository; // For handling course associations
+    private PozicijaRepository pozicijaRepository;
     @Autowired
     private PozicijaService pozicijaService;
 

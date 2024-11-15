@@ -1,4 +1,8 @@
 package projekat.jobeasy.Repositories;
 
-public class KorisniciRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import projekat.jobeasy.Models.Korisnici;
+
+public interface KorisniciRepository extends JpaRepository<Korisnici, Long> {
+
 }
