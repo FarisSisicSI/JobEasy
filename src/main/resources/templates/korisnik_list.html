@@ -28,7 +28,7 @@
             <td th:text="${korisnik.email}"></td>
             <td th:text="${korisnik.username}"></td>
             <td>
-                <a th:href="@{/korisnik/edit/{id}(id=${korisnik.id})}" class="button">Uredi</a>
+                <a th:href="@{/korisnici/edit/{id}(id=${korisnik.id})}" class="button">Uredi</a>
                 <a th:href="@{/korisnici/delete/{id}(id=${korisnik.id})}" class="button">Izbriši</a>
             </td>
         </tr>
