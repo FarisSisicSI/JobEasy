@@ -17,7 +17,7 @@ h1 {
     font-size: 2.5em;
     text-align: center;
     margin: 30px 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Dodaje blagu sjenku za bolji kontrast */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 p {
@@ -33,7 +33,7 @@ p {
     margin: auto;
     padding: 25px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.8); /* Blagi sloj za bolji kontrast */
+    background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
 }
@@ -52,7 +52,7 @@ p {
 
 .button:hover {
     background-color: #0056b3;
-    transform: scale(1.05); /* Blagi efekt uvećanja na hover */
+    transform: scale(1.05);
 }
 
 a {
@@ -66,28 +66,24 @@ a {
 }
 
 a:hover {
-    background-color: #004a8d; /* Tamnija boja za hover efekt */
-}
-
-
-/* Stil za kontejner liste */
+    background-color: #004a8d;
 ul {
-    list-style-type: none; /* Uklanja oznake liste */
+    list-style-type: none;
     padding: 0;
 }
-
+}
 li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 1px solid #ddd; /* Tanka linija između stavki */
+    border-bottom: 1px solid #ddd;
 }
 
 li span {
     font-size: 18px;
     color: #333;
-    flex-grow: 1; /* Omogućava tekstu da zauzme dostupni prostor */
+    flex-grow: 1;
     text-align: left;
 }
 
@@ -97,10 +93,10 @@ li a {
 
 .buttons-container {
     display: flex;
-    gap: 10px; /* Razmak između dugmadi */
+    gap: 10px;
 }
 
-/* Stil za dugmad */
+
 .button, li a {
     padding: 6px 12px;
     background-color: #007bff;
@@ -115,7 +111,7 @@ li a {
 }
 
 
-/* Stil za naslov pozicije */
+
 .pozicija-naslov {
     color: #007bee;
     font-size: 2.5em;
@@ -125,7 +121,7 @@ li a {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Stil za glavni kontejner */
+
 .container {
     max-width: 800px;
     margin: auto;
@@ -135,14 +131,14 @@ li a {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Stil za sadržaj unutar jednog diva */
+
 .pozicija-sadrzaj {
     color: #333;
     font-size: 1.1em;
     line-height: 1.6;
 }
 
-/* Stil za podnaslove u sadržaju */
+
 .pozicija-sadrzaj h2 {
     color: #007bee;
     font-size: 1.5em;
@@ -151,13 +147,13 @@ li a {
     padding-bottom: 5px;
 }
 
-/* Stil za opis */
+
 .pozicija-opis {
     margin-top: 10px;
     text-align: justify;
 }
 
-/* Stil za liste (kvalifikacije i odgovornosti) */
+
 .pozicija-lista {
     list-style-type: disc;
     padding-left: 20px;
@@ -171,6 +167,7 @@ li a {
     line-height: 1.5;
     margin: 5px 0;
 }
+
 
 
 

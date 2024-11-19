@@ -31,7 +31,7 @@ public class KorisniciController {
     }
 
     @PostMapping("/registracija")
-    public String dodajPoziciju(@ModelAttribute Korisnici korisnici) {
+    public String dodajKorisnika(@ModelAttribute Korisnici korisnici) {
         korisnikService.sacuvajKorisnika(korisnici);
         return "redirect:/welcome";
     }
@@ -57,6 +57,7 @@ public class KorisniciController {
             postojeciKorisnik.setEmail(korisnik.getEmail());
             postojeciKorisnik.setUsername(korisnik.getUsername());
             postojeciKorisnik.setPassword(korisnik.getPassword());
+
             korisnikService.sacuvajKorisnika(postojeciKorisnik);
         });
         return "redirect:/korisnici";

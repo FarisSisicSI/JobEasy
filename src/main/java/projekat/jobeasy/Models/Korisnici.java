@@ -36,16 +36,19 @@ public class Korisnici {
     @Size(min = 3, max = 20)
     private String password;
 
+    private Integer idRole ;
+
     // Konstruktor, getteri i setteri
     public Korisnici() {}
 
-    public Korisnici(Long id, String ime, String prezime, String email, String username, String password) {
+    public Korisnici(Long id, String ime, String prezime, String email, String username, String password, Integer idRole) {
         this.id = id;
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.idRole = idRole;
     }
 
 
