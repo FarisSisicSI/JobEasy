@@ -9,7 +9,7 @@
 <div class="container">
     <h1>Prijava na poziciju</h1>
 
-    <form th:action="@{/prijava/novaprijava}" th:object="${prijava}" method="post">
+    <form th:action="@{/prijava/novaprijava}" th:object="${prijava}" method="post" enctype="multipart/form-data">
         <label for="ime">Ime:</label><br>
         <input type="text" th:field="*{ime}" id="ime" required /><br>
 
@@ -19,22 +19,23 @@
         <label for="email">Email:</label><br>
         <input type="email" th:field="*{email}" id="email" required /><br>
 
-        <label for="cv">CV:</label><br>
-        <input type="text" th:field="*{cv}" id="cv" required /><br>
+        <label for="cvFile">CV:</label><br>
+        <input type="file" id="cvFile" name="cvFile" required /><br>
 
         <label>Otvorene pozicije:</label>
         <ul>
             <li th:each="pozicija : ${pozicije}">
-                <input type="checkbox" th:value="${pozicija.id}" th:name="pozicijaIds" required/>
+                <input type="checkbox" th:value="${pozicija.id}" th:name="pozicijaIds"/>
                 <span th:text="${pozicija.nazivPozicije}"></span>
             </li>
         </ul>
 
         <div>
-            <button type="submit " class="button">Pošalji prijavu</button>
+            <button type="submit" class="button">Pošalji prijavu</button>
             <a href="/welcome" class="button">Nazad</a>
         </div>
     </form>
+
 </div>
 
 </body>
