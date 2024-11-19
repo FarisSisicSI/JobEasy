@@ -1,0 +1,18 @@
+<!-- welcome.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>JobEasy - Korisnik Početna </title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+  <h1>Dobro došli na JobEasy</h1>
+  <h3>Korisnik, [Ime i Prezime]</h3>
+  <a class="button" th:href="@{/pozicije}">Lista pozicija</a>
+  <a class="button" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a>
+  <a class="button" th:href="@{/korisnici}">Pogledaj svoj profil</a>
+
+</div>
+</body>
+</html>
