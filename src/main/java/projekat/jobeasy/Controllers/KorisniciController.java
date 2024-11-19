@@ -32,9 +32,13 @@ public class KorisniciController {
 
     @PostMapping("/registracija")
     public String dodajKorisnika(@ModelAttribute Korisnici korisnici) {
+        if (korisnici.getIdRole() == null) {
+            korisnici.setIdRole(1);
+        }
         korisnikService.sacuvajKorisnika(korisnici);
         return "redirect:/welcome";
     }
+
 
     @GetMapping("/delete/{korisnikId}")
     public String brisanjeKorisnika(@PathVariable Long korisnikId) {

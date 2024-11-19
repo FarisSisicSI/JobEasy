@@ -14,8 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Korisnici {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,22 +21,25 @@ public class Korisnici {
     @NotNull
     @Size(min = 3, max = 20)
     private String ime;
+
     @NotNull
     @Size(min = 3, max = 20)
     private String prezime;
+
     @NotNull
     @Email
     private String email;
+
     @NotNull
     @Size(min = 3, max = 20)
     private String username;
+
     @NotNull
     @Size(min = 3, max = 20)
     private String password;
 
-    private Integer idRole ;
+    private Integer idRole = 1; // Podrazumevana vrednost
 
-    // Konstruktor, getteri i setteri
     public Korisnici() {}
 
     public Korisnici(Long id, String ime, String prezime, String email, String username, String password, Integer idRole) {
@@ -48,8 +49,6 @@ public class Korisnici {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.idRole = idRole;
+        this.idRole = idRole != null ? idRole : 1;
     }
-
-
 }
