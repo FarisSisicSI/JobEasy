@@ -53,10 +53,7 @@ public class PrijavaController {
             String uploadDir = "cvprijave/";
             Path uploadPath = Paths.get(uploadDir);
 
-            // Proverite da li direktorijum postoji
-            if (!Files.exists(uploadPath)) {
-                throw new IOException("Direktorijum za fajlove ne postoji: " + uploadDir);
-            }
+
 
             String fileName = cvFile.getOriginalFilename();
             Path filePath = uploadPath.resolve(fileName);
@@ -72,7 +69,7 @@ public class PrijavaController {
             e.printStackTrace();
         }
 
-        // Spasite prijavu u bazi
+
         prijavaService.spasiPrijavu(prijava, pozicijaIds);
 
         return "redirect:/prijava";
