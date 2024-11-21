@@ -1,5 +1,7 @@
 package projekat.jobeasy.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import projekat.jobeasy.Services.KorisnikService;
 public class KorisniciController {
 
     private final KorisnikService korisnikService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public KorisniciController(KorisnikService korisnikService) {
         this.korisnikService = korisnikService;
@@ -32,6 +37,8 @@ public class KorisniciController {
 
     @PostMapping("/registracija")
     public String dodajKorisnika(@ModelAttribute Korisnici korisnici) {
+
+        korisnici.setPassword(passwordEncoder.encode(korisnici.getPassword()));
         if (korisnici.getIdRole() == null) {
             korisnici.setIdRole(1);
         }

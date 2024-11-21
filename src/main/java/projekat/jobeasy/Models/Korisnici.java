@@ -19,11 +19,11 @@ public class Korisnici {
     private Long id;
 
     @NotNull
-    @Size(min = 3, max = 20)
+    @Size(min = 3)
     private String ime;
 
     @NotNull
-    @Size(min = 3, max = 20)
+    @Size(min = 3)
     private String prezime;
 
     @NotNull
@@ -31,14 +31,14 @@ public class Korisnici {
     private String email;
 
     @NotNull
-    @Size(min = 3, max = 20)
+    @Size(min = 3)
     private String username;
 
     @NotNull
-    @Size(min = 3, max = 20)
+    @Size(min = 3)
     private String password;
 
-    private Integer idRole = 1; // Podrazumevana vrednost
+    private Integer idRole = 1;
 
     public Korisnici() {}
 
