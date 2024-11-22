@@ -5,34 +5,41 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 </head>
 <body>
-
 <div class="container">
     <h1>Registracija korisnika</h1>
+    <form th:action="@{/registracija}" th:object="${korisnik}" method="post" class="login-form">
 
-    <form th:action="@{/registracija}" th:object="${korisnik}" method="post">
-        <label for="ime">Ime:</label><br>
-        <input type="text" th:field="*{ime}" id="ime" required/><br>
-
-        <label for="prezime">Prezime:</label><br>
-        <input type="text" th:field="*{prezime}" id="prezime" required/><br>
-
-        <label for="email">Email:</label><br>
-        <input type="email" th:field="*{email}" id="email" required/><br>
-
-        <label for="username">Korisničko ime:</label><br>
-        <input type="text" th:field="*{username}" id="username" required/><br>
-
-        <label for="password">Lozinka:</label><br>
-        <input type="password" th:field="*{password}" id="password" required/><br>
-
-
-
-        <div>
-            <button type="submit" class="button">Registruj se</button>
-            <a href="/welcome" class="button">Nazad</a>
+        <div class="form-group">
+            <label for="ime">Ime:</label>
+            <input type="text" th:field="*{ime}" id="ime" name="ime" class="form-control" placeholder="Unesite ime" required/>
         </div>
+
+        <div class="form-group">
+            <label for="prezime">Prezime:</label>
+            <input type="text" th:field="*{prezime}" id="prezime" name="prezime" class="form-control" placeholder="Unesite prezime" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" th:field="*{email}" id="email" name="email" class="form-control" placeholder="Unesite email" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Korisničko ime:</label>
+            <input type="text" th:field="*{username}" id="username" name="username" class="form-control" placeholder="Unesite korisničko ime" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Lozinka:</label>
+            <input type="password" th:field="*{password}" id="password" name="password" class="form-control" placeholder="Unesite lozinku" required/>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="button">Registruj se</button>
+            <a th:href="@{/welcome}" class="button">Nazad</a>
+        </div>
+
     </form>
 </div>
-
 </body>
 </html>

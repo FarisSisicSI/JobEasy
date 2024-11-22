@@ -71,7 +71,7 @@ public class PrijavaController {
 
         prijavaService.spasiPrijavu(prijava, pozicijaIds);
 
-        return "redirect:/prijava";
+        return "redirect:/welcome";
     }
 
 
