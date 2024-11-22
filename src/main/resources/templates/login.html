@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>JobEasy - Početna</title>
+  <title>JobEasy - Login</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 </head>
 <body>
+<div class="container">
+  <h1>Dobrodošli na JobEasy</h1>
+  <form th:action="@{/login}" method="post" class="login-form">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" class="form-control" placeholder="Unesite korisničko ime" required />
+    </div>
 
-<form class="container" th:action="@{/login}" method="post">
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required />
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Unesite lozinku" required />
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="button">Login</button>
+      <a th:href="@{/register}" class="button">Registracija</a>
+    </div>
+  </form>
+
+  <div th:if="${param.error}" class="error-message">
+    <p>Neispravno korisničko ime ili lozinka.</p>
   </div>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required />
+  <div th:if="${param.logout}" class="success-message">
+    <p>Uspješno ste se odjavili.</p>
   </div>
-  <div>
-    <button class="button" type="submit">Login</button>
-  </div>
-  <a class="button" th:href="@{/register}">User registration</a>
-</form>
-<div th:if="${param.error}">
-  <p style="color:red;">Invalid username or password</p>
 </div>
-<div th:if="${param.logout}">
-  <p style="color:green;">You have been logged out successfully.</p>
-</div>
-
-
-
 </body>
-</html>
-
 </html>

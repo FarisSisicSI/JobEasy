@@ -171,3 +171,50 @@ li a {
 
 
 
+.login-form .form-group {
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease-in-out;
+}
+
+.login-form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.error-message, .success-message {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
+
