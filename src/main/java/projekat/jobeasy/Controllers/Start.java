@@ -13,7 +13,7 @@ public class Start {
         return "welcome";
     }
 
-    @GetMapping("/welcome")
+    @GetMapping("/pocetna")
     public String hello(Model model) {
         return "welcome";
     }

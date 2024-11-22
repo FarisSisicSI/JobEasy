@@ -20,7 +20,6 @@ public class AdminUserInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        // Check if an admin user already exists
         if (korisniciRepository.findByUsername("admin").isEmpty()) {
             Korisnici admin = new Korisnici();
             admin.setUsername("admin");
