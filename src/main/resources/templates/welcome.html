@@ -12,7 +12,7 @@
 
 
   <a class="button" th:href="@{/pozicije}">Lista pozicija</a>
-  <a class="button" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a>
+  <a class="button" th:href="@{/prijava/novaprijava}" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">Prijava na poziciju</a>
   <a class="button" th:href="@{/korisnici}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Pregled korisnika</a>
   <a class="button" th:href="@{/prijava}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Pregled Aplikanata</a>
 

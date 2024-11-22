@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import projekat.jobeasy.Models.Pozicije;
 import projekat.jobeasy.Models.Prijava;
 import projekat.jobeasy.Services.PozicijaService;
 import projekat.jobeasy.Services.PrijavaService;

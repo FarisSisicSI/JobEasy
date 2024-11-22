@@ -16,8 +16,10 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/registracija", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/prijava/**").hasRole("ADMIN")
+                        .requestMatchers("/prijava/novaprijava").hasRole("USER")
                         .requestMatchers("/pozicije/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/prijava/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
