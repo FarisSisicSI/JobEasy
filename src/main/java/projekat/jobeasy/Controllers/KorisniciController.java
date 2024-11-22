@@ -29,22 +29,7 @@ public class KorisniciController {
         return "korisnik_list";
     }
 
-    @GetMapping("/registracija")
-    public String registracijaForma(Model model) {
-        model.addAttribute("korisnik", new Korisnici());
-        return "registracija";
-    }
 
-    @PostMapping("/registracija")
-    public String dodajKorisnika(@ModelAttribute Korisnici korisnici) {
-
-        korisnici.setPassword(passwordEncoder.encode(korisnici.getPassword()));
-        if (korisnici.getIdRole() == null) {
-            korisnici.setIdRole(1);
-        }
-        korisnikService.sacuvajKorisnika(korisnici);
-        return "redirect:/welcome";
-    }
 
 
     @GetMapping("/delete/{korisnikId}")

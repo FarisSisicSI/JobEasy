@@ -8,12 +8,12 @@
 <body>
 <div class="container">
   <h1>Dobro došli na JobEasy</h1>
-  <h3>Korisnik, [Ime i Prezime]</h3>
+  <h3>Pozdrav, <span th:text="${#authentication.name}">[Korisnici]</span>!</h3>
 
 
   <a class="button" th:href="@{/pozicije}">Lista pozicija</a>
   <a class="button" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a>
-  <a class="button" th:href="@{/korisnici}">Pogledaj svoj profil</a>
+  <a class="button" th:href="@{/korisnici}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Pregled korisnika</a>
 </div>
 </body>
 </html>

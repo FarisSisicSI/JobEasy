@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface KorisniciRepository extends JpaRepository<Korisnici, Long> {
     Optional<Korisnici> findByUsername(String username);
 
+
 }

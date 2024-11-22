@@ -9,7 +9,7 @@
 <div class="container">
     <h1>Registracija korisnika</h1>
 
-    <form th:action="@{/korisnici/registracija}" th:object="${korisnik}" method="post">
+    <form th:action="@{/registracija}" th:object="${korisnik}" method="post">
         <label for="ime">Ime:</label><br>
         <input type="text" th:field="*{ime}" id="ime" required/><br>
 
