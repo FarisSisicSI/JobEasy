@@ -1,5 +1,6 @@
 package projekat.jobeasy.Services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projekat.jobeasy.Models.Pozicije;
@@ -7,6 +8,10 @@ import projekat.jobeasy.Models.Prijava;
 import projekat.jobeasy.Repositories.PozicijaRepository;
 import projekat.jobeasy.Repositories.PrijavaRepository;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +55,24 @@ public class PrijavaService {
     }
 
     public void izbrisiPrijavu(Long id) {
-        prijavaRepository.deleteById(id);
+        Optional<Prijava> prijava = prijavaRepository.findById(id);
+        if (prijava.isPresent()) {
+            // Obrišite povezani fajl
+            String fileName = prijava.get().getCv();
+            Path filePath = Paths.get("cvprijave/", fileName);
+            try {
+                Files.deleteIfExists(filePath);
+            } catch (IOException e) {
+                System.err.println("Greška prilikom brisanja fajla: " + e.getMessage());
+            }
+            // Obrišite prijavu
+            prijavaRepository.delete(prijava.get());
+        } else {
+            throw new EntityNotFoundException("Prijava sa ID-em " + id + " nije pronađena.");
+        }
     }
+
+
+
+
 }
