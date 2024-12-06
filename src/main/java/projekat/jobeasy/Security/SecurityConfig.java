@@ -24,7 +24,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/welcome", true) // Redirect to welcome page on successful login
+                        .defaultSuccessUrl("/welcome", true)
                         .permitAll()
                 )
                 .logout(logout -> logout

@@ -125,7 +125,7 @@ li a {
 .container {
     max-width: 800px;
     margin: auto;
-    padding: 20px;
+    padding: 50px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
