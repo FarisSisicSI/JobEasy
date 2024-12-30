@@ -12,3 +12,5 @@ EXPOSE 8080
 
 # Pokreni aplikaciju kada kontejner startuje
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
