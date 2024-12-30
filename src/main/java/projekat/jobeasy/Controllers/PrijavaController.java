@@ -55,6 +55,7 @@ public class PrijavaController {
 
 
             String fileName = cvFile.getOriginalFilename();
+            assert fileName != null;
             Path filePath = uploadPath.resolve(fileName);
 
             // Sačuvajte fajl
