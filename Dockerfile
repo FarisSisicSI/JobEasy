@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # Kopiraj JAR fajl u kontejner
-COPY target/JobEasy-0.0.1-SNAPSHOT.jar app.jar
+COPY ./target/JobEasy-0.0.1-SNAPSHOT.jar app.jar
 
 # Eksponiraj port koji koristi aplikacija
 EXPOSE 8080

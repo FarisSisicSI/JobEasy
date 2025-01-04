@@ -89,11 +89,20 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
-
 		</dependency>
 	</dependencies>
 
 	<build>
+		<resources>
+			<!-- Osiguraj kopiranje statičkih resursa -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+
 		<plugins>
 			<!-- Spring Boot Plugin -->
 			<plugin>
@@ -109,7 +118,6 @@
 				<configuration>
 					<source>21</source>
 					<target>21</target>
-
 				</configuration>
 			</plugin>
 		</plugins>
