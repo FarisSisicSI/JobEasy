@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-image: url('images/download.jpeg');
+    background-image: url('slika2.png');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -29,9 +29,10 @@ p {
 }
 
 .container {
-    max-width: 800px;
+    width: 100%;
+    max-width: 500px;
     margin: auto;
-    padding: 25px;
+    padding: 50px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -67,11 +68,13 @@ a {
 
 a:hover {
     background-color: #004a8d;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
 }
-}
+
 li {
     display: flex;
     justify-content: space-between;
@@ -94,8 +97,8 @@ li a {
 .buttons-container {
     display: flex;
     gap: 10px;
-}
 
+}
 
 .button, li a {
     padding: 6px 12px;
@@ -104,13 +107,12 @@ li a {
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s;
+
 }
 
 .button:hover, li a:hover {
     background-color: #0056b3;
 }
-
-
 
 .pozicija-naslov {
     color: #007bee;
@@ -122,22 +124,12 @@ li a {
 }
 
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    padding: 50px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
 
 .pozicija-sadrzaj {
     color: #333;
     font-size: 1.1em;
     line-height: 1.6;
 }
-
 
 .pozicija-sadrzaj h2 {
     color: #007bee;
@@ -147,12 +139,10 @@ li a {
     padding-bottom: 5px;
 }
 
-
 .pozicija-opis {
     margin-top: 10px;
     text-align: justify;
 }
-
 
 .pozicija-lista {
     list-style-type: disc;
@@ -167,9 +157,6 @@ li a {
     line-height: 1.5;
     margin: 5px 0;
 }
-
-
-
 
 .login-form .form-group {
     margin-bottom: 20px;
@@ -217,4 +204,3 @@ li a {
 .success-message {
     color: green;
 }
-

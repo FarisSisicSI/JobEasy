@@ -11,7 +11,7 @@
   <ul>
     <li th:each="pozicija : ${pozicije}">
       <span th:text="${pozicija.nazivPozicije}"></span>
-      <div class="buttons-container">
+      <div class="buttons-container ">
         <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="button">Pregled</a>
         <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="button">Prijavi se</a>
         <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="button">Uredi</a>

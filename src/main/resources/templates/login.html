@@ -9,17 +9,17 @@
   <h1>Dobrodošli na JobEasy</h1>
   <form th:action="@{/login}" method="post" class="login-form">
     <div class="form-group">
-      <label for="username">Username:</label>
+      <label for="username">Korisničko ime:</label>
       <input type="text" id="username" name="username" class="form-control" placeholder="Unesite korisničko ime" required />
     </div>
 
     <div class="form-group">
-      <label for="password">Password:</label>
+      <label for="password">Korisnička lozinka:</label>
       <input type="password" id="password" name="password" class="form-control" placeholder="Unesite lozinku" required />
     </div>
 
     <div class="button-group">
-      <button type="submit" class="button">Login</button>
+      <button type="submit" class="button">Prijava</button>
       <a th:href="@{/registracija}" class="button">Registracija</a>
     </div>
   </form>
