@@ -1,5 +1,6 @@
 package projekat.jobeasy.Services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +13,7 @@ import projekat.jobeasy.Repositories.KorisniciRepository;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class KorisnikService implements UserDetailsService {
@@ -35,7 +37,7 @@ public class KorisnikService implements UserDetailsService {
     public Korisnici sacuvajKorisnika(Korisnici korisnici) {
         return korisniciRepository.save(korisnici);
     }
-
+    @Transactional
     public void izbrisiKorisnika(Long id) {
         korisniciRepository.deleteById(id);
     }

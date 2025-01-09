@@ -1,14 +1,13 @@
 package projekat.jobeasy.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+
+
 
 @Entity
 @Getter
@@ -39,6 +38,13 @@ public class Korisnici {
     private String password;
 
     private Integer idRole = 1;
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean enabled = false;
+
+    @OneToOne(mappedBy = "korisnik", cascade = CascadeType.ALL, orphanRemoval = true)
+    private VerificationToken verificationToken;
+
+
 
     public Korisnici() {}
 
@@ -50,5 +56,6 @@ public class Korisnici {
         this.username = username;
         this.password = password;
         this.idRole = idRole != null ? idRole : 1;
+
     }
 }

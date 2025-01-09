@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import projekat.jobeasy.Models.Korisnici;
 import projekat.jobeasy.Models.Pozicije;
 import projekat.jobeasy.Services.KorisnikService;
+import projekat.jobeasy.Services.VerificationTokenService;
 
 
 @Controller
@@ -16,11 +17,14 @@ public class KorisniciController {
 
     private final KorisnikService korisnikService;
 
+    private final VerificationTokenService verificationTokenService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public KorisniciController(KorisnikService korisnikService) {
+    public KorisniciController(KorisnikService korisnikService, VerificationTokenService verificationTokenService) {
         this.korisnikService = korisnikService;
+        this.verificationTokenService = verificationTokenService;
     }
 
     @GetMapping
@@ -35,6 +39,7 @@ public class KorisniciController {
     @GetMapping("/delete/{korisnikId}")
     public String brisanjeKorisnika(@PathVariable Long korisnikId) {
         korisnikService.izbrisiKorisnika(korisnikId);
+        verificationTokenService.deleteTokensByKorisnikId(korisnikId);
         return "redirect:/korisnici";
     }
 
