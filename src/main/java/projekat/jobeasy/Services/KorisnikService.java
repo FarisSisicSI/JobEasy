@@ -48,6 +48,10 @@ public class KorisnikService implements UserDetailsService {
         Korisnici korisnici = korisniciRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Korisnik ne postoji"));
 
+        if (!korisnici.isEnabled()) {
+            throw new UsernameNotFoundException("Korisnički nalog nije verifikovan. Proverite svoj email.");
+        }
+
         String role;
         if (korisnici.getIdRole() == 1) {
             role = "USER";
@@ -63,6 +67,7 @@ public class KorisnikService implements UserDetailsService {
                 .roles(role)
                 .build();
     }
+
 
 
 

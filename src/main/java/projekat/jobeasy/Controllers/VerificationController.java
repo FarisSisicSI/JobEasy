@@ -9,6 +9,8 @@ import projekat.jobeasy.Models.VerificationToken;
 import projekat.jobeasy.Repositories.KorisniciRepository;
 import projekat.jobeasy.Repositories.VerificationTokenRepository;
 
+import java.time.LocalDateTime;
+
 @RestController
 public class VerificationController {
 
@@ -20,17 +22,24 @@ public class VerificationController {
 
     @GetMapping("/api/v1/verify")
     public String verifyAccount(@RequestParam("token") String token) {
+        // Pronađi token
         VerificationToken verificationToken = tokenRepository.findByToken(token);
 
         if (verificationToken == null) {
-            return "Invalid or expired token.";
+            return "Invalid or expired token. Please check your email for the correct verification link.";
         }
 
+
+        // Proveri da li je korisnik već verifikovan
         Korisnici korisnik = verificationToken.getKorisnik();
+        if (korisnik.isEnabled()) {
+            return "Your account is already verified. You can log in.";
+        }
+
+        // Verifikuj korisnički nalog
         korisnik.setEnabled(true);
         userRepository.save(korisnik);
 
-        return "Account verified successfully!";
+        return "Your account has been successfully verified! You can now log in.";
     }
 }
-
