@@ -8,7 +8,6 @@
 <div class="container">
     <h1>Prijava pregled</h1>
 
-    </a>
     <table>
         <thead>
         <tr>
@@ -28,7 +27,10 @@
             <td th:text="${korisnik.prezime}"></td>
             <td th:text="${korisnik.email}"></td>
             <td th:text="${korisnik.username}"></td>
-            <td th:text="${korisnik.enabled}"></td>
+            <td>
+                <span th:if="${korisnik.enabled}" th:text="'✓'"></span>
+                <span th:if="${!korisnik.enabled}" th:text="'✘'"></span>
+            </td>
             <td>
                 <a th:href="@{/korisnici/edit/{id}(id=${korisnik.id})}" class="button">Uredi</a>
                 <a th:href="@{/korisnici/delete/{id}(id=${korisnik.id})}" class="button">Izbriši</a>

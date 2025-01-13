@@ -8,6 +8,10 @@
 <div class="container">
   <h1>Dobrodošli na JobEasy</h1>
 
+  <div th:if="${param.message}" class="success-message">
+    <p th:text="${param.message}" class="success-message"></p>
+  </div>
+
   <!-- Login Form -->
   <form th:action="@{/login}" method="post" class="login-form">
     <div class="form-group">
