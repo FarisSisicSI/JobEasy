@@ -57,7 +57,7 @@ public class KorisniciController {
             postojeciKorisnik.setPrezime(korisnik.getPrezime());
             postojeciKorisnik.setEmail(korisnik.getEmail());
             postojeciKorisnik.setUsername(korisnik.getUsername());
-            postojeciKorisnik.setPassword(korisnik.getPassword());
+
 
             korisnikService.sacuvajKorisnika(postojeciKorisnik);
         });

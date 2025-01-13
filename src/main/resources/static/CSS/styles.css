@@ -32,8 +32,8 @@ p {
 }
 
 .container {
-    width: 50%;
-    max-width: 600px;
+
+    max-width: 800px;
     margin: auto;
     padding: 50px;
     border-radius: 10px;

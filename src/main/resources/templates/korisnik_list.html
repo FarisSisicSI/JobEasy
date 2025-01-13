@@ -17,6 +17,7 @@
             <th>Prezime</th>
             <th>Email</th>
             <th>Username</th>
+            <th>Dozvola</th>
             <th>Radnja</th>
         </tr>
         </thead>
@@ -27,6 +28,7 @@
             <td th:text="${korisnik.prezime}"></td>
             <td th:text="${korisnik.email}"></td>
             <td th:text="${korisnik.username}"></td>
+            <td th:text="${korisnik.enabled}"></td>
             <td>
                 <a th:href="@{/korisnici/edit/{id}(id=${korisnik.id})}" class="button">Uredi</a>
                 <a th:href="@{/korisnici/delete/{id}(id=${korisnik.id})}" class="button">Izbriši</a>

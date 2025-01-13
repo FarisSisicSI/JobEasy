@@ -26,8 +26,9 @@ public class AdminUserInitializer implements CommandLineRunner {
             admin.setPassword(passwordEncoder.encode("admin123")); // Default password
             admin.setIme("Admin");  // Dodaj ime
             admin.setPrezime("Adminic"); // Dodaj prezime
-            admin.setEmail("admin@example.com");  // Dodaj email
+            admin.setEmail("sisic.faris.21@size.ba");  // Dodaj email
             admin.setIdRole(2);
+            admin.setEnabled(true);
             korisniciRepository.save(admin);
             System.out.println("Kreiran admin: 'admin' and lozinka: 'admin123'");
         } else {
