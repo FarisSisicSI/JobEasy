@@ -37,7 +37,7 @@ p {
     margin: auto;
     padding: 50px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
 }
@@ -68,6 +68,8 @@ a {
     display: inline-block;
     transition: background-color 0.3s;
 }
+
+
 
 a:hover {
     background-color: #004a8d;
@@ -205,5 +207,7 @@ li a {
 }
 
 .success-message {
-    color: green;
+    color: #1f63b0;
+    font-weight: bold;
+
 }
