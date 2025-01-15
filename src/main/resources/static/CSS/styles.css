@@ -204,10 +204,10 @@ li a {
 
 .error-message {
     color: red;
+    font-weight: bold;
 }
 
 .success-message {
     color: #1f63b0;
     font-weight: bold;
-
 }
