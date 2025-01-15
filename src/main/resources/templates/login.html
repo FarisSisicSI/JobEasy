@@ -2,14 +2,91 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>JobEasy - Login</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+  <meta charset="utf-8"></meta>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+
 </head>
+<style>
+  body {
+    background-color: #e9f1f7;
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    text-align: center;
+    color: #4a90e2;
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-weight: bold;
+  }
+
+  .form-group input {
+    border-radius: 5px;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 10px 15px;
+    color: #fff;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .button:hover {
+    background-color: #357abd;
+  }
+
+  .success-message, .error-message {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+  }
+
+  .error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+  }
+</style>
 <body>
 <div class="container">
   <h1>Dobrodošli na JobEasy</h1>
 
   <div th:if="${param.message}" class="success-message">
     <p th:text="${param.message}" class="success-message"></p>
+  </div>
+
+  <div class="error-message" th:if="${param.error}" >
+  <p th:text="${param.error}" class="error-message"></p>
   </div>
 
   <!-- Login Form -->
@@ -23,17 +100,13 @@
       <label for="password">Korisnička lozinka:</label>
       <input type="password" id="password" name="password" class="form-control" placeholder="Unesite lozinku" required />
     </div>
-
+    <br>
     <div class="button-group">
       <button type="submit" class="button">Prijava</button>
       <a th:href="@{/registracija}" class="button">Registracija</a>
     </div>
   </form>
 
-  <!-- Error Message for Authentication Failure -->
-  <div th:if="${param.error}" class="error-message">
-    <p th:text="${param.error}">Poruka greške će biti prikazana ovde</p>
-  </div>
 
   <!-- Success Message for Logout -->
   <div th:if="${param.logout}" class="success-message">

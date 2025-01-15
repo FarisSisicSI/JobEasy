@@ -30,9 +30,10 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             errorMessage = "Došlo je do greške prilikom prijave. Pokušajte ponovo.";
         }
 
-        // Kodirajte grešku
-        String encodedErrorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
+        // Encode the error message to pass it as a URL parameter
+        String encodedErrorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
 
+        // Redirect to the login page with the error message
         response.sendRedirect("/login?error=" + encodedErrorMessage);
     }
 }
