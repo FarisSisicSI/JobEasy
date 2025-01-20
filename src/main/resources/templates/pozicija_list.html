@@ -6,8 +6,42 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}"/>
 </head>
+<style>
+  .table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    border: none;
+    background-color: #ffffff;
+    padding: 15px;
+    margin-top: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+  }
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  .table th,
+  .table td {
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .table-hover tbody tr:hover {
+    background: rgba(0, 123, 255, 0.1);
+  }
+
+  .table-container {
+    margin: 0 auto;
+    max-width: 80%;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
 
@@ -47,20 +81,37 @@
 
 <div class="container">
   <h1>Otvorene pozicije</h1>
-  <ul>
-    <li th:each="pozicija : ${pozicije}">
-      <span th:text="${pozicija.nazivPozicije}"></span>
-      <div class="buttons-container ">
-        <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="button">Pregled</a>
-        <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="button">Prijavi se</a>
-        <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="button">Uredi</a>
-        <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="button">Izbriši</a>
-      </div>
-    </li>
-    <a href="/welcome" class = "button">Nazad</a>
-    <a href="/pozicije/novapozicija" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class = "button">Dodaj poziciju</a>
-  </ul>
 
+  
+
+
+  <div class="table-container">
+    <table class="table table-hover text-center">
+      <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-outline-success btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/pozicije/novapozicija}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" ><b>+</b></a></button>
+      </div>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Naziv pozicije</th>
+        <th>Radnja</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="pozicija : ${pozicije}">
+        <td th:text="${pozicija.id}"></td>
+        <td th:text="${pozicija.nazivPozicije}"></td>
+        <td>
+          <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
+          <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="btn btn-outline-success btn-sm">Prijavi se</a>
+          <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-outline-warning btn-sm">Uredi</a>
+          <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-outline-danger btn-sm">Izbriši</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
 </body>
 </html>

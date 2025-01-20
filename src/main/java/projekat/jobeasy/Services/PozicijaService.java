@@ -30,6 +30,18 @@ public class PozicijaService {
         return pozicijaRepository.save(pozicija);
     }
 
+    public long countAll() {
+        long broj = pozicijaRepository.count();
+        System.out.println("Broj zapisa u tabeli pozicije: " + broj);
+        return broj;
+    }
+
+
+
+    public List<Pozicije> findAll() {
+        return pozicijaRepository.findAll();
+    }
+
     public void izbrisiPoziciju(Long id) {
         pozicijaRepository.deleteById(id);
     }

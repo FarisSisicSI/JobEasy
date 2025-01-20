@@ -67,4 +67,11 @@ public class PozicijeController {
         pozicijaService.sacuvajPoziciju(pozicija);
         return "redirect:/pozicije";
     }
+
+
+
+
+
+
+
 }

@@ -8,11 +8,98 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}"/>
 
-  <!-- Bootstrap CSS -->
+
 
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<style>
+  .table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    border: none;
+    background-color: #ffffff;
+    padding: 15px;
+    margin-top: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .table th,
+  .table td {
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .table-hover tbody tr:hover {
+    background: rgba(0, 123, 255, 0.1);
+  }
+
+  .table-container {
+    margin: 0 auto;
+    max-width: 80%;
+  }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .registration-card {
+    background-color: #7A94B4;
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    width: 300px;
+    height: 200px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .registration-card .icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .registration-card .icon img {
+    width: 30px;
+    height: 30px;
+    opacity: 0.5;
+  }
+
+  .registration-card h1 {
+    font-size: 2rem;
+    margin: 10px 0;
+  }
+
+  .registration-card .title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+
+  .registration-card .more-info {
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .registration-card .more-info:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #000;
+  }
+
+</style>
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
 
@@ -23,19 +110,9 @@
     <!-- Desna strana navigacije -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/pozicije}">Lista pozicija</a></button>
-        </li>
-        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a></button>
-        </li>
-        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/korisnici}">Pregled korisnika</a></button>
-        </li>
-        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/prijava}">Pregled aplikanata</a></button>
 
-        </li>
+
+
         <li class="nav-item">
           <button class="Btn">
 
@@ -48,12 +125,74 @@
     </div>
   </div>
 </nav>
+<body>
 
 
-<div class="container mt-4" >
+
+<div style="text-align: center; margin-top: 20px;">
   <h1>Dobro došli na JobEasy</h1>
   <h3>Pozdrav, <span th:text="${#authentication.name}">[Korisnici]</span>!</h3>
 </div>
+
+
+<div class="container mt-5" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+  <div class="registration-card">
+    <div class="icon">
+      <img src="/images/cv.png" alt="Icon">
+    </div>
+    <h3><span th:text="${ukupanBrojPozicija}"></span></h3>
+    <p class="title">Lista pozicija</p>
+    <a th:href="@{/pozicije}" class="more-info">Više informacija &#x2794;</a>
+  </div>
+
+
+  <div class="registration-card">
+    <div class="icon">
+      <img src="/images/people.png" alt="Icon">
+    </div>
+    <h1>12</h1>
+    <p class="title">Pregled Korisnika</p>
+    <a th:href="@{/korisnici}" class="more-info">Više informacija &#x2794;</a>
+  </div>
+
+  <div class="registration-card">
+    <div class="icon">
+      <img src="/images/lista.png" alt="Icon">
+    </div>
+    <h1>7</h1>
+    <p class="title">Pregled aplikanata</p>
+    <a th:href="@{/prijava}" class="more-info">Više informacija &#x2794;</a>
+  </div>
+
+
+</div>
+
+
+<div class="table-container" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+  <table class="table table-hover text-center">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Naziv pozicije</th>
+      <th>Radnja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pozicija : ${pozicije}">
+      <td th:text="${pozicija.id}"></td>
+      <td th:text="${pozicija.nazivPozicije}"></td>
+      <td>
+        <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
+        <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="btn btn-outline-success btn-sm">Prijavi se</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

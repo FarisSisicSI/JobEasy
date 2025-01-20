@@ -26,7 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/registracija", "/api/v1/verify" , "/css/**", "/js/**").permitAll()
                         .requestMatchers("/prijava/novaprijava").hasRole("USER")
                         .requestMatchers("/pozicije/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/prijava/**").hasRole("ADMIN")
+                        .requestMatchers("/prijava/**", "/korisnici/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )
