@@ -2,33 +2,154 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>JobEasy - Editovanje Korisnika</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}"/>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #343a40;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #ffffff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    h1.pozicija-naslov {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: #495057;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      color: #495057;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    }
+
+    .input-field:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+      outline: none;
+    }
+
+    .button-group {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #ffffff;
+      background-color: #28a745;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .button:hover {
+      background-color: #218838;
+      transform: scale(1.05);
+    }
+
+    .button:active {
+      background-color: #1e7e34;
+    }
+
+    .button-group .button:last-child {
+      background-color: #6c757d;
+    }
+
+    .button-group .button:last-child:hover {
+      background-color: #5a6268;
+    }
+  </style>
 </head>
+
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Desna strana navigacije -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/pozicije}">Lista pozicija</a></button>
+        </li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a></button>
+        </li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/korisnici}">Pregled korisnika</a></button>
+        </li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/prijava}">Pregled aplikanata</a></button>
+
+        </li>
+        <li class="nav-item">
+          <button class="Btn">
+
+            <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
+
+            <div class="text"><a class="nav-link" style="color:white;" th:href="@{/logout}">Odjava</a></div>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 <body>
 <div class="container">
   <h1 class="pozicija-naslov">Editovanje Korisnika</h1>
   <form th:action="@{/korisnici/edit/{korisnikId}(korisnikId=${korisnik.id})}" th:object="${korisnik}" method="post" class="edit-form">
     <div class="form-group">
-      <label for="ime">Ime:</label><br>
-      <input type="text" id="ime" th:field="*{ime}" class="input-field" placeholder="Unesite ime" />
+      <label for="ime">Ime:</label>
+      <input type="text" id="ime" th:field="*{ime}" class="input-field" placeholder="Unesite ime" required />
     </div>
     <div class="form-group">
-      <label for="prezime">Prezime:</label><br>
-      <input type="text" id="prezime" th:field="*{prezime}" class="input-field" placeholder="Unesite prezime" />
+      <label for="prezime">Prezime:</label>
+      <input type="text" id="prezime" th:field="*{prezime}" class="input-field" placeholder="Unesite prezime" required />
     </div>
     <div class="form-group">
-      <label for="email">Email:</label><br>
-      <input type="email" id="email" th:field="*{email}" class="input-field" placeholder="Unesite email" />
+      <label for="email">Email:</label>
+      <input type="email" id="email" th:field="*{email}" class="input-field" placeholder="Unesite email" required />
     </div>
     <div class="form-group">
-      <label for="username">Korisničko ime:</label><br>
-      <input type="text" id="username" th:field="*{username}" class="input-field" placeholder="Unesite korisničko ime" />
+      <label for="username">Korisničko ime:</label>
+      <input type="text" id="username" th:field="*{username}" class="input-field" placeholder="Unesite korisničko ime" required />
     </div>
-
-
     <div class="button-group">
-      <button type="submit" class="button">Sačuvaj</button>
-      <a href="/korisnici" class="button">Nazad</a>
+      <button type="submit" class="btn btn-outline-success">Sačuvaj</button>
+      <a href="/korisnici" class="btn btn-outline-warning">Nazad</a>
     </div>
   </form>
 </div>
