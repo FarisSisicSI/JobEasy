@@ -32,7 +32,6 @@ public class PozicijaService {
 
     public long countAll() {
         long broj = pozicijaRepository.count();
-        System.out.println("Broj zapisa u tabeli pozicije: " + broj);
         return broj;
     }
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JobEasy - Početna</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
@@ -97,6 +97,10 @@
     background-color: rgba(0, 0, 0, 0.2);
     color: #000;
   }
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
 
 </style>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -140,7 +144,7 @@
     <div class="icon">
       <img src="/images/cv.png" alt="Icon">
     </div>
-    <h3><span th:text="${ukupanBrojPozicija}"></span></h3>
+    <h1><span th:text="${ukupanBrojPozicija}"></span></h1>
     <p class="title">Lista pozicija</p>
     <a th:href="@{/pozicije}" class="more-info">Više informacija &#x2794;</a>
   </div>
@@ -150,7 +154,7 @@
     <div class="icon">
       <img src="/images/people.png" alt="Icon">
     </div>
-    <h1>12</h1>
+    <h1><span th:text="${ukupanBrojKorisnika}"></span></h1>
     <p class="title">Pregled Korisnika</p>
     <a th:href="@{/korisnici}" class="more-info">Više informacija &#x2794;</a>
   </div>
