@@ -71,7 +71,7 @@ public class KorisnikService implements UserDetailsService {
     public long countAll() {
         long broj = korisniciRepository.count();
 
-        System.out.println("Broj zapisa u tabeli korisnici: " + broj);
+
         return broj;
     }
 
