@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>JobEasy - Dodaj Firmu</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}" />
+
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .form-container label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .form-container .form-control {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            transition: box-shadow 0.2s ease-in-out;
+        }
+
+        .form-container .form-control:focus {
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+            border-color: #80bdff;
+        }
+
+        .form-container .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .form-container button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="btn btn-danger" th:href="@{/logout}">Odjava</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="form-container">
+    <h1>Dodaj Firmu</h1>
+    <form th:action="@{/firma/novafirma}" th:object="${firma}" method="post">
+
+        <div class="form-group mb-3">
+            <label for="naziv">Naziv firme:</label>
+            <input type="text" th:field="*{naziv}" id="naziv" class="form-control" placeholder="Unesite naziv firme" required />
+            <div class="error" th:if="${#fields.hasErrors('naziv')}" th:errors="*{naziv}"></div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="adresa">Adresa firme:</label>
+            <input type="text" th:field="*{adresa}" id="adresa" class="form-control" placeholder="Unesite adresu firme" required />
+            <div class="error" th:if="${#fields.hasErrors('adresa')}" th:errors="*{adresa}"></div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="kontaktOsoba">Kontakt osoba:</label>
+            <input type="text" th:field="*{kontaktOsoba}" id="kontaktOsoba" class="form-control" placeholder="Unesite kontakt osobu" required />
+            <div class="error" th:if="${#fields.hasErrors('kontaktOsoba')}" th:errors="*{kontaktOsoba}"></div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="telefon">Telefon:</label>
+            <input type="text" th:field="*{telefon}" id="telefon" class="form-control" placeholder="Unesite telefon" required />
+            <div class="error" th:if="${#fields.hasErrors('telefon')}" th:errors="*{telefon}"></div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="mobilni">Mobilni:</label>
+            <input type="text" th:field="*{mobilni}" id="mobilni" class="form-control" placeholder="Unesite mobilni telefon" required />
+            <div class="error" th:if="${#fields.hasErrors('mobilni')}" th:errors="*{mobilni}"></div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="email">Email:</label>
+            <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Unesite email" required />
+            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+
+        <!-- Opcina - ako treba dropdown -->
+        <div class="form-group mb-3">
+            <label for="opcina">Općina:</label>
+            <select id="opcina" name="opcina.id" class="form-control" required>
+                <option value="">Izaberi općinu</option>
+                <option th:each="opcina : ${opcine}"
+                        th:value="${opcina.id}"
+                        th:text="${opcina.naziv}">
+                </option>
+            </select>
+        </div>
+
+
+        <div class="text-center">
+            <button class="btn btn-outline-success" type="submit">Sačuvaj</button>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
