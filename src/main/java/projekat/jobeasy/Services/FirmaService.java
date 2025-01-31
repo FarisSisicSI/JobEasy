@@ -1,5 +1,6 @@
 package projekat.jobeasy.Services;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import projekat.jobeasy.Models.Firma;
 import projekat.jobeasy.Repositories.FirmaRepository;
@@ -11,9 +12,11 @@ import java.util.Optional;
 public class FirmaService {
 
     private final FirmaRepository firmaRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public FirmaService(FirmaRepository firmaRepository) {
         this.firmaRepository = firmaRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public List<Firma> pronadjiSveFirme() {
@@ -25,10 +28,31 @@ public class FirmaService {
     }
 
     public void izbrisiFirmu(Long id) {
-        firmaRepository.deleteById(id);
+        if (firmaRepository.existsById(id)) {
+            firmaRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("Firma sa ID " + id + " ne postoji.");
+        }
     }
 
     public Firma sacuvajFirmu(Firma firma) {
+        // Postavi podrazumevane vrednosti ako nisu unete
+        if (firma.getUsername() == null || firma.getUsername().isBlank()) {
+            firma.setUsername(firma.getNaziv().replaceAll("\\s+", "").toLowerCase());
+        }
+        if (firma.getPassword() == null || firma.getPassword().isBlank()) {
+            firma.setPassword(passwordEncoder.encode(firma.getNaziv().replaceAll("\\s+", "").toLowerCase() + "1234"));
+        } else if (!firma.getPassword().startsWith("$2a$")) { // Provera da li je već šifrovana
+            firma.setPassword(passwordEncoder.encode(firma.getPassword()));
+        }
+        if (firma.getIdRole() == null) {
+            firma.setIdRole(3);
+        }
+
         return firmaRepository.save(firma);
+    }
+
+    public long countAll() {
+        return firmaRepository.count();
     }
 }

@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Random;
 
 @Entity
 @Getter
@@ -44,10 +47,19 @@ public class Firma {
     @Email
     private String email;
 
+    @NotNull
+    private String username;
+
+    @NotNull
+    private String password;
+
+    @NotNull
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 3")
+    private Integer idRole;
+
     public Firma() {}
 
-    public Firma(Long id, String naziv, String adresa, Opcina opcina, String kontaktOsoba, String telefon, String mobilni, String email) {
-        this.id = id;
+    public Firma(String naziv, String adresa, Opcina opcina, String kontaktOsoba, String telefon, String mobilni, String email) {
         this.naziv = naziv;
         this.adresa = adresa;
         this.opcina = opcina;
@@ -55,5 +67,25 @@ public class Firma {
         this.telefon = telefon;
         this.mobilni = mobilni;
         this.email = email;
+        this.username = generirajUsername();
+        this.password = encodePassword(generirajjednostavnusifru());
+        this.idRole = 3;
+    }
+
+
+
+    private String generirajUsername() {
+        return naziv.replaceAll("\\s+", "").toLowerCase();
+    }
+
+    private String encodePassword(String rawPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(rawPassword);
+    }
+
+    private String generirajjednostavnusifru() {
+        Random random = new Random();
+        int randomNum = 1000 + random.nextInt(9000);
+        return naziv.replaceAll("\\s+", "").toLowerCase() + randomNum;
     }
 }

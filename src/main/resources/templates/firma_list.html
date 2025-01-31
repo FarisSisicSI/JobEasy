@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>JobEasy - Otvorene Pozicije</title>
+  <title>JobEasy - Lista Firmi</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}"/>
 </head>
+
 <style>
   .table {
     border-radius: 10px;
@@ -22,8 +23,6 @@
   .table td {
     background: linear-gradient(to bottom, #ffffff, #f8f9fa);
     border: none;
-    text-align: center;
-    vertical-align: middle;
   }
 
   .table-hover tbody tr:hover {
@@ -39,8 +38,10 @@
     text-align: center;
     margin-bottom: 30px;
   }
-</style>
 
+
+</style>
+<body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
@@ -70,50 +71,51 @@
 
             <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
 
-            <div class="text"><a class="nav-link" style="color:white;" th:href="@{/logout}">Odjava</a></div>
+            <div class="text"><a class="nav-link" style="color:white;"  th:href="@{/logout}">Odjava</a></div>
           </button>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-<body>
-
 <div class="container">
-  <h1>Otvorene pozicije</h1>
-
-  
-
-
+  <h1 class="text-center">Lista Firmi</h1>
   <div class="table-container">
     <table class="table table-hover text-center">
       <div class="d-flex justify-content-end mb-3">
-        <a class="nav-link" th:href="@{/pozicije/novapozicija}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" >
-          <button class="btn btn-outline-success btn-sm mx-1" type="button"><b>Nova pozicija</b></button>
+        <a class="nav-link" th:href="@{/firma/novafirma}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" >
+          <button class="btn btn-outline-success btn-sm mx-1" type="button"><b>Nova firma</b></button>
         </a>
       </div>
       <thead>
       <tr>
-        <th>ID</th>
-        <th>Naziv pozicije</th>
-        <th>Radnja</th>
+        <th>Naziv</th>
+        <th>Adresa</th>
+        <th>Opcina</th>
+        <th>Kontakt Osoba</th>
+        <th>Telefon</th>
+        <th>Mobilni</th>
+        <th>Email</th>
+        <th>Akcije</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="pozicija : ${pozicije}">
-        <td th:text="${pozicija.id}"></td>
-        <td th:text="${pozicija.nazivPozicije}"></td>
+      <tr th:each="firma : ${firme}">
+        <td th:text="${firma.naziv}"></td>
+        <td th:text="${firma.adresa}"></td>
+        <td th:text="${firma.opcina.naziv}"></td>
+        <td th:text="${firma.kontaktOsoba}"></td>
+        <td th:text="${firma.telefon}"></td>
+        <td th:text="${firma.mobilni}"></td>
+        <td th:text="${firma.email}"></td>
         <td>
-          <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
-          <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="btn btn-outline-success btn-sm">Prijavi se</a>
-          <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-outline-warning btn-sm">Uredi</a>
-          <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-outline-danger btn-sm">Izbriši</a>
+          <a th:href="@{/firma/edit/{id}(id=${firma.id})}" class="btn btn-outline-warning btn-sm">Uredi</a>
+          <a th:href="@{/firma/delete/{id}(id=${firma.id})}" class="btn btn-outline-danger btn-sm">Izbriši</a>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
 </div>
-
 </body>
 </html>

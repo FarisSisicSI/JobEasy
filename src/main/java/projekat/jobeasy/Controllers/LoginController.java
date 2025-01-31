@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import projekat.jobeasy.Services.FirmaService;
 import projekat.jobeasy.Services.KorisnikService;
 import projekat.jobeasy.Services.PozicijaService;
 
@@ -13,10 +14,12 @@ public class LoginController {
     private final PozicijaService pozicijaService;
 
     private final KorisnikService korisnikService;
+    private final FirmaService firmaService;
 
-    public LoginController(PozicijaService pozicijaService, KorisnikService korisnikService) {
+    public LoginController(PozicijaService pozicijaService, KorisnikService korisnikService, FirmaService firmaService) {
         this.pozicijaService = pozicijaService;
         this.korisnikService = korisnikService;
+        this.firmaService = firmaService;
     }
 
 
@@ -40,6 +43,9 @@ public class LoginController {
 
         long ukupanBrojKorisnika = korisnikService.countAll();
         model.addAttribute("ukupanBrojKorisnika", ukupanBrojKorisnika);
+
+        long ukupanBrojFirmi = firmaService.countAll();
+        model.addAttribute("ukupanBrojFirmi", ukupanBrojFirmi);
 
         return "welcome";
     }

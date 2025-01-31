@@ -12,22 +12,7 @@ import java.util.Optional;
 @Repository
 public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
 
-//    private List<Prijava> prijave = new ArrayList<>();
-//    private Long trenutniId = 1L;
-//
-//    public List<Prijava> findAll() {
-//        return prijave;
-//    }
-//
-//    public Optional<Prijava> findById(Long id) {
-//        return prijave.stream().filter(prijava -> prijava.getId().equals(id)).findFirst();
-//    }
-//
-//    public Prijava save(Prijava prijava) {
-//        prijava.setId(trenutniId++);
-//        prijave.add(prijava);
-//        return prijava;
-//    }
+
 
 
 }
