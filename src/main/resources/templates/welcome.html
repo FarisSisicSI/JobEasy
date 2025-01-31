@@ -177,28 +177,73 @@
 
 </div>
 
+<div class="container mt-5" th:if="${#authorization.expression('hasRole(''ROLE_FIRMA'')')}">
+  <div class="registration-card">
+    <div class="icon">
+      <img src="/images/cv.png" alt="Icon">
+    </div>
+    <h1><span th:text="${ukupanBrojPozicija}"></span></h1>
+    <p class="title">Lista vaših pozicija</p>
+    <a th:href="@{/pozicije}" class="more-info">Više informacija &#x2794;</a>
+  </div>
+
+
+  <div class="registration-card">
+    <div class="icon">
+      <img src="/images/people.png" alt="Icon">
+    </div>
+    <h1><span th:text="${ukupanBrojKorisnika}"></span></h1>
+    <p class="title">Pregled prijava</p>
+    <a th:href="@{/korisnici}" class="more-info">Više informacija &#x2794;</a>
+  </div>
+
+
+
+
+</div>
+
+
+
+
 
 <div class="table-container" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
   <table class="table table-hover text-center">
+    <div class="d-flex justify-content-end mb-3">
+      <a class="nav-link" th:href="@{/pozicije/novapozicija}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" >
+        <button class="btn btn-outline-success btn-sm mx-1" type="button"><b>Nova pozicija</b></button>
+      </a>
+    </div>
     <thead>
     <tr>
-      <th>ID</th>
       <th>Naziv pozicije</th>
+      <th>Firma</th>
+      <th>Zanimanje</th>
+      <th>Kratak opis</th>
+      <th>Datum od</th>
+      <th>Datum do</th>
       <th>Radnja</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="pozicija : ${pozicije}">
-      <td th:text="${pozicija.id}"></td>
       <td th:text="${pozicija.nazivPozicije}"></td>
+      <td th:text="${pozicija.firma.naziv}"></td>
+      <td th:text="${pozicija.zanimanje.naziv}"></td>
+      <td th:text="${pozicija.kratakOpisPozicije}"></td>
+      <td th:text="${pozicija.datumOd}"></td>
+      <td th:text="${pozicija.datumDo}"></td>
       <td>
         <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
         <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="btn btn-outline-success btn-sm">Prijavi se</a>
+        <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-outline-warning btn-sm">Uredi</a>
+        <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-outline-danger btn-sm">Izbriši</a>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
+
+
 </div>
 </div>
 

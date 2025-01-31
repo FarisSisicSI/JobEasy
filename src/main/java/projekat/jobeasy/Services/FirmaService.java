@@ -55,4 +55,8 @@ public class FirmaService {
     public long countAll() {
         return firmaRepository.count();
     }
+
+    public Optional<Firma> pronadjiFirmuUsername(String username) {
+        return firmaRepository.findByUsername(username);
+    }
 }

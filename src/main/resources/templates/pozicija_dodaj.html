@@ -5,10 +5,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}" />
-
     <style>
-
-
         .form-container {
             max-width: 600px;
             margin: 50px auto;
@@ -17,7 +14,6 @@
             border-radius: 12px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
-
         .form-container h1 {
             font-size: 1.8rem;
             margin-bottom: 20px;
@@ -25,90 +21,45 @@
             font-weight: bold;
             color: #343a40;
         }
-
-        .form-container label {
-            font-weight: bold;
-            color: #495057;
-        }
-
-        .form-container .form-control {
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            padding: 10px;
-            transition: box-shadow 0.2s ease-in-out;
-        }
-
-        .form-container .form-control:focus {
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
-            border-color: #80bdff;
-        }
-
-
-
-        .form-container button:hover {
-            background-color: #218838;
-            transform: scale(1.05);
-        }
-
-        .form-container button:active {
-            background-color: #1e7e34;
-        }
-
-        .form-container textarea {
-            resize: none;
-        }
     </style>
 </head>
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Desna strana navigacije -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-
-
-
-                <li class="nav-item">
-                    <button class="Btn">
-
-                        <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-
-                        <div class="text"><a class="nav-link" style="color:white;"  th:href="@{/logout}">Odjava</a></div>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 <body>
 <div class="form-container">
     <h1>Dodaj Poziciju</h1>
     <form th:action="@{/pozicije/novapozicija}" th:object="${pozicija}" method="post">
         <div class="form-group mb-3">
             <label for="nazivPozicije">Naziv pozicije:</label>
-            <input type="text" th:field="*{nazivPozicije}" id="nazivPozicije" class="form-control" placeholder="Unesite naziv pozicije" required />
+            <input type="text" th:field="*{nazivPozicije}" id="nazivPozicije" class="form-control" required />
+        </div>
+        <div class="form-group mb-3">
+            <label for="kratakOpisPozicije">Kratak opis:</label>
+            <textarea th:field="*{kratakOpisPozicije}" id="kratakOpisPozicije" class="form-control" rows="3" required></textarea>
+        </div>
+        <!-- Ako je ulogovana firma, automatski postavi njen ID i sakrij polje -->
+        <input type="hidden" th:if="${#authorization.expression('hasRole(''ROLE_FIRMA'')')}" th:field="*{firma}" th:value="${#authentication.principal.id}" />
+
+        <!-- Ako je admin, prikaži dropdown da bira firmu -->
+        <div class="form-group mb-3" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+            <label for="firma">Firma:</label>
+            <select th:field="*{firma}" id="firma" class="form-control" required>
+                <option th:each="firma : ${firme}" th:value="${firma.id}" th:text="${firma.naziv}"></option>
+            </select>
         </div>
 
         <div class="form-group mb-3">
-            <label for="opisPozicije">Opis pozicije:</label>
-            <textarea th:field="*{opisPozicije}" id="opisPozicije" class="form-control" rows="3" placeholder="Unesite opis pozicije" required></textarea>
+            <label for="zanimanje">Zanimanje:</label>
+            <select th:field="*{zanimanje}" id="zanimanje" class="form-control" required>
+                <option th:each="zanimanje : ${zanimanja}" th:value="${zanimanje.id}" th:text="${zanimanje.naziv}"></option>
+            </select>
         </div>
-
         <div class="form-group mb-3">
-            <label for="kvalifikacije">Kvalifikacije:</label>
-            <textarea th:field="*{kvalifikacije}" id="kvalifikacije" class="form-control" rows="3" placeholder="Unesite kvalifikacije" required></textarea>
+            <label for="datumOd">Datum početka:</label>
+            <input type="date" th:field="*{datumOd}" id="datumOd" class="form-control" required />
         </div>
-
         <div class="form-group mb-3">
-            <label for="odgovornosti">Odgovornosti:</label>
-            <textarea th:field="*{odgovornosti}" id="odgovornosti" class="form-control" rows="3" placeholder="Unesite odgovornosti" required></textarea>
+            <label for="datumDo">Datum završetka:</label>
+            <input type="date" th:field="*{datumDo}" id="datumDo" class="form-control" required />
         </div>
-
         <div class="text-center">
             <button class="btn btn-outline-success" type="submit">Sačuvaj</button>
         </div>

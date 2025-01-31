@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class Pozicije {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     @Size(min = 1, max = 50)
     private String nazivPozicije;
@@ -20,30 +22,35 @@ public class Pozicije {
     @Lob
     @NotNull
     @Size(min = 1)
-    private String opisPozicije;
+    private String kratakOpisPozicije;
 
-    @Lob
-    @NotNull
-    @Size(min = 1)
-    private String kvalifikacije;
+    @ManyToOne
+    @JoinColumn(name = "idFirme", nullable = false)
+    private Firma firma;
 
-    @Lob
+    @ManyToOne
+    @JoinColumn(name = "idZanimanje", nullable = false)
+    private Zanimanje zanimanje;
+
     @NotNull
-    @Size(min = 1)
-    private String odgovornosti;
+    private LocalDate datumOd = LocalDate.now();
+
+    @NotNull
+    private LocalDate datumDo = LocalDate.now().plusMonths(1);
 
     @ManyToMany(mappedBy = "upisanePozicije")
     private List<Prijava> prijava = new ArrayList<>();
 
-
     // Constructors
     public Pozicije() {}
-    public Pozicije(Long id, String nazivPozicije, String opisPozicije, String kvalifikacije, String odgovornosti) {
-        this.id = id;
+
+    public Pozicije(String nazivPozicije, String kratakOpisPozicije, Firma firma, Zanimanje zanimanje, LocalDate datumOd, LocalDate datumDo) {
         this.nazivPozicije = nazivPozicije;
-        this.opisPozicije = opisPozicije;
-        this.kvalifikacije = kvalifikacije;
-        this.odgovornosti = odgovornosti;
+        this.kratakOpisPozicije = kratakOpisPozicije;
+        this.firma = firma;
+        this.zanimanje = zanimanje;
+        this.datumOd = datumOd;
+        this.datumDo = datumDo;
     }
 
     // Getters and Setters
@@ -53,15 +60,21 @@ public class Pozicije {
     public String getNazivPozicije() { return nazivPozicije; }
     public void setNazivPozicije(String nazivPozicije) { this.nazivPozicije = nazivPozicije; }
 
-    public String getOpisPozicije() { return opisPozicije; }
-    public void setOpisPozicije(String opisPozicije) { this.opisPozicije = opisPozicije; }
+    public String getKratakOpisPozicije() { return kratakOpisPozicije; }
+    public void setKratakOpisPozicije(String kratakOpisPozicije) { this.kratakOpisPozicije = kratakOpisPozicije; }
 
-    public String getKvalifikacije() { return kvalifikacije; }
-    public void setKvalifikacije(String kvalifikacije) { this.kvalifikacije = kvalifikacije; }
+    public Firma getFirma() { return firma; }
+    public void setFirma(Firma firma) { this.firma = firma; }
 
-    public String getOdgovornosti() { return odgovornosti; }
-    public void setOdgovornosti(String odgovornosti) { this.odgovornosti = odgovornosti; }
+    public Zanimanje getZanimanje() { return zanimanje; }
+    public void setZanimanje(Zanimanje zanimanje) { this.zanimanje = zanimanje; }
 
-    public List<Prijava> getStudents() { return prijava; }
-    public void setStudents(List<Prijava> students) { this.prijava = students; }
+    public LocalDate getDatumOd() { return datumOd; }
+    public void setDatumOd(LocalDate datumOd) { this.datumOd = datumOd; }
+
+    public LocalDate getDatumDo() { return datumDo; }
+    public void setDatumDo(LocalDate datumDo) { this.datumDo = datumDo; }
+
+    public List<Prijava> getPrijava() { return prijava; }
+    public void setPrijava(List<Prijava> prijava) { this.prijava = prijava; }
 }

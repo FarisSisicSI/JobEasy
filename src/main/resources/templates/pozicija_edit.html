@@ -58,79 +58,9 @@
             text-align: center;
             margin-top: 20px;
         }
-
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        .button:active {
-            background-color: #003f7f;
-        }
-
-        .button:last-child {
-            background-color: #6c757d;
-        }
-
-        .button:last-child:hover {
-            background-color: #5a6268;
-        }
-
-
     </style>
 </head>
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Desna strana navigacije -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/pozicije}">Lista pozicija</a></button>
-                </li>
-                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a></button>
-                </li>
-                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/korisnici}">Pregled korisnika</a></button>
-                </li>
-                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/firma}">Pregled firmi</a></button>
-
-                </li>
-                <li class="nav-item">
-                    <button class="Btn">
-
-                        <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-
-                        <div class="text"><a class="nav-link " style="color:white;"  th:href="@{/logout}">Odjava</a></div>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 <body>
-
 <div class="container">
     <h1>Editovanje Pozicije</h1>
     <form th:action="@{/pozicije/edit/{id}(id=${pozicija.id})}" th:object="${pozicija}" method="post">
@@ -139,16 +69,24 @@
             <input type="text" id="nazivPozicije" th:field="*{nazivPozicije}" placeholder="Unesite naziv pozicije" required />
         </div>
         <div class="form-group">
-            <label for="opisPozicije">Opis pozicije:</label>
-            <textarea id="opisPozicije" th:field="*{opisPozicije}" rows="4" placeholder="Unesite opis pozicije" required></textarea>
+            <label for="kratakOpisPozicije">Kratak opis pozicije:</label>
+            <textarea id="kratakOpisPozicije" th:field="*{kratakOpisPozicije}" rows="2" placeholder="Unesite kratak opis" required></textarea>
         </div>
         <div class="form-group">
-            <label for="kvalifikacije">Kvalifikacije:</label>
-            <textarea id="kvalifikacije" th:field="*{kvalifikacije}" rows="4" placeholder="Unesite kvalifikacije" required></textarea>
+            <label for="firma">Firma:</label>
+            <input type="text" id="firma" th:value="${pozicija.firma.naziv}" readonly />
         </div>
         <div class="form-group">
-            <label for="odgovornosti">Odgovornosti:</label>
-            <textarea id="odgovornosti" th:field="*{odgovornosti}" rows="4" placeholder="Unesite odgovornosti" required></textarea>
+            <label for="zanimanje">Zanimanje:</label>
+            <input type="text" id="zanimanje" th:value="${pozicija.zanimanje.naziv}" readonly />
+        </div>
+        <div class="form-group">
+            <label for="datumOd">Datum početka:</label>
+            <input type="date" id="datumOd" th:field="*{datumOd}" required />
+        </div>
+        <div class="form-group">
+            <label for="datumDo">Datum završetka:</label>
+            <input type="date" id="datumDo" th:field="*{datumDo}" required />
         </div>
         <div class="button-group">
             <button type="submit" class="btn btn-outline-success">Sačuvaj</button>

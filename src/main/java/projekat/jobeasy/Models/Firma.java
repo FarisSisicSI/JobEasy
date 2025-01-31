@@ -86,6 +86,6 @@ public class Firma {
     private String generirajjednostavnusifru() {
         Random random = new Random();
         int randomNum = 1000 + random.nextInt(9000);
-        return naziv.replaceAll("\\s+", "").toLowerCase() + randomNum;
+        return naziv.replaceAll("\\s+", "").toLowerCase() + "1234";
     }
 }

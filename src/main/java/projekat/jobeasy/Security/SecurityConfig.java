@@ -22,13 +22,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/registracija", "/api/v1/verify" , "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/prijava/novaprijava").hasRole("USER")
-                        .requestMatchers("/pozicije/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/prijava/**", "/korisnici/**").hasRole("ADMIN")
-
+                        .requestMatchers("/login", "/registracija", "/api/v1/verify", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/prijava/novaprijava").hasAnyRole("USER")
+                        .requestMatchers("/pozicije/**").hasAnyRole("USER", "ADMIN", "FIRMA")
+                        .requestMatchers("/prijava/**", "/korisnici/**", "/firma/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
                         .loginPage("/login")
                         .failureHandler(failureHandler)

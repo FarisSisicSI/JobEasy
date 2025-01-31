@@ -13,6 +13,7 @@ public class PozicijaService {
 
     private final PozicijaRepository pozicijaRepository;
 
+
     @Autowired
     public PozicijaService(PozicijaRepository pozicijaRepository) {
         this.pozicijaRepository = pozicijaRepository;
