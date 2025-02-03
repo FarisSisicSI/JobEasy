@@ -27,11 +27,6 @@ public class AdminUserInitializer implements CommandLineRunner {
             admin.setIme("Admin");  // Dodaj ime
             admin.setPrezime("Adminic"); // Dodaj prezime
             admin.setEmail("sisic.faris.21@size.ba");  // Dodaj email
-            admin.setAdresa("Mejdandžik 13");
-            admin.setOpcina(1);
-            admin.setTelefon("0603182711");
-            admin.setZanimanje1(1);
-
             admin.setIdRole(2);
             admin.setEnabled(true);
             korisniciRepository.save(admin);
