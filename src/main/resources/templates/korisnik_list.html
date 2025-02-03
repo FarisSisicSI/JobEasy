@@ -17,89 +17,60 @@
         margin-top: 20px;
         transition: box-shadow 0.3s ease-in-out;
     }
-
-    .table th,
-    .table td {
-        background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-        border: none;
-    }
-
     .table-hover tbody tr:hover {
         background: rgba(0, 123, 255, 0.1);
     }
-
     .table-container {
         margin: 0 auto;
-        max-width: 80%;
+        max-width: 90%;
     }
-
     h1 {
         text-align: center;
         margin-bottom: 30px;
     }
-
-
 </style>
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Desna strana navigacije -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/pozicije}">Lista pozicija</a></button>
-                </li>
-                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a></button>
-                </li>
-                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/korisnici}">Pregled korisnika</a></button>
-                </li>
-                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/firma}">Pregled firmi</a></button>
-
-                </li>
-                <li class="nav-item">
-                    <button class="Btn">
-
-                        <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-
-                        <div class="text"><a class="nav-link " style="color:white;"  th:href="@{/logout}">Odjava</a></div>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 <body>
 <div class="container">
-    <h1>Prijava pregled</h1>
-
+    <h1>Pregled Korisnika</h1>
     <div class="table-container">
         <table class="table table-hover text-center">
             <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Ime</th>
-                <th scope="col">Prezime</th>
-                <th scope="col">Email</th>
-                <th scope="col">Username</th>
-                <th scope="col">Dozvola</th>
-                <th scope="col">Radnja</th>
+                <th>ID</th>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Adresa</th>
+                <th>Telefon</th>
+                <th>Voz. Dozvola</th>
+                <th>CV</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Opcina</th>
+                <th>Zanimanje 1</th>
+                <th>Zanimanje 2</th>
+                <th>Uloga</th>
+                <th>Aktivan</th>
+                <th>Radnje</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="table-light" th:each="korisnik : ${korisnici}">
-                <th scope="row" th:text="${korisnik.id}"></th>
+            <tr th:each="korisnik : ${korisnici}">
+                <td th:text="${korisnik.id}"></td>
                 <td th:text="${korisnik.ime}"></td>
                 <td th:text="${korisnik.prezime}"></td>
+                <td th:text="${korisnik.adresa}"></td>
+                <td th:text="${korisnik.telefon}"></td>
+                <td th:text="${korisnik.vozackaDozvola ?: 'N/A'}"></td>
+                <td>
+                    <a th:if="${korisnik.cv}" th:href="@{'/cv/' + ${korisnik.cv}}" target="_blank">Pogledaj</a>
+                    <span th:if="${korisnik.cv == null}">Nema CV</span>
+                </td>
                 <td th:text="${korisnik.email}"></td>
                 <td th:text="${korisnik.username}"></td>
+                <td th:text="${korisnik.opcina.naziv}"></td>
+                <td th:text="${korisnik.zanimanje1.naziv}"></td>
+                <td th:text="${korisnik.zanimanje2 != null ? korisnik.zanimanje2.naziv : 'N/A'}"></td>
+                <td th:text="${korisnik.idRole == 1 ? 'USER' : 'ADMIN'}"></td>
                 <td>
                     <span th:if="${korisnik.enabled}" th:text="'✓'"></span>
                     <span th:if="${!korisnik.enabled}" th:text="'✘'"></span>
@@ -112,12 +83,6 @@
             </tbody>
         </table>
     </div>
-    <!--
-  <div style="text-align: center; margin-top: 20px;">
-    <button class="btn btn-light mx-1" type="button"><a class="nav-link" th:href="@{/welcome}" style="width: 100px;">Nazad</a></button>
-  </div>
-  -->
 </div>
-
 </body>
 </html>

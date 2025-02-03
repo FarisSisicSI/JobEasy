@@ -2,36 +2,28 @@ package projekat.jobeasy.Services;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import projekat.jobeasy.Models.Firma;
 import projekat.jobeasy.Models.Korisnici;
-import projekat.jobeasy.Repositories.FirmaRepository;
 import projekat.jobeasy.Repositories.KorisniciRepository;
 import projekat.jobeasy.Security.CustomUserDetails;
-
 
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class KorisnikService implements UserDetailsService {
 
-
     private final KorisniciRepository korisniciRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private final FirmaRepository firmaRepository;
-
-    @Autowired
-    public KorisnikService(KorisniciRepository korisniciRepository, FirmaRepository firmaRepository) {
+    public KorisnikService(KorisniciRepository korisniciRepository, PasswordEncoder passwordEncoder) {
         this.korisniciRepository = korisniciRepository;
-        this.firmaRepository = firmaRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Korisnici> pronadjiSveKorisnike() {
@@ -42,60 +34,59 @@ public class KorisnikService implements UserDetailsService {
         return korisniciRepository.findById(id);
     }
 
-    public Korisnici sacuvajKorisnika(Korisnici korisnici) {
-        return korisniciRepository.save(korisnici);
-    }
-    @Transactional
     public void izbrisiKorisnika(Long id) {
         korisniciRepository.deleteById(id);
     }
 
+    public Korisnici sacuvajKorisnika(Korisnici korisnik) {
+        return korisniciRepository.save(korisnik);
+    }
+
+    @Transactional
+    public void azurirajKorisnika(Long korisnikId, Korisnici noviPodaci) {
+        korisniciRepository.findById(korisnikId).ifPresent(postojeciKorisnik -> {
+            postojeciKorisnik.setIme(noviPodaci.getIme());
+            postojeciKorisnik.setPrezime(noviPodaci.getPrezime());
+            postojeciKorisnik.setAdresa(noviPodaci.getAdresa());
+            postojeciKorisnik.setTelefon(noviPodaci.getTelefon());
+            postojeciKorisnik.setVozackaDozvola(noviPodaci.getVozackaDozvola());
+            postojeciKorisnik.setCv(noviPodaci.getCv());
+            postojeciKorisnik.setEmail(noviPodaci.getEmail());
+            postojeciKorisnik.setUsername(noviPodaci.getUsername());
+
+            if (noviPodaci.getPassword() != null && !noviPodaci.getPassword().isEmpty()) {
+                postojeciKorisnik.setPassword(passwordEncoder.encode(noviPodaci.getPassword()));
+            }
+
+            if (noviPodaci.getOpcina() != null) {
+                postojeciKorisnik.setOpcina(noviPodaci.getOpcina());
+            }
+            if (noviPodaci.getZanimanje1() != null) {
+                postojeciKorisnik.setZanimanje1(noviPodaci.getZanimanje1());
+            }
+            if (noviPodaci.getZanimanje2() != null) {
+                postojeciKorisnik.setZanimanje2(noviPodaci.getZanimanje2());
+            }
+
+            korisniciRepository.save(postojeciKorisnik);
+        });
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Prvo tražimo korisnika u bazi korisnika
-        Optional<Korisnici> korisnikOpt = korisniciRepository.findByUsername(username);
-        if (korisnikOpt.isPresent()) {
-            Korisnici korisnik = korisnikOpt.get();
-            if (!korisnik.isEnabled()) {
-                throw new UsernameNotFoundException("Korisnički nalog nije verifikovan. Proverite svoj email.");
-            }
+        Korisnici korisnik = korisniciRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Korisnik sa korisničkim imenom " + username + " nije pronađen."));
 
-            String role = korisnik.getIdRole() == 1 ? "USER" : "ADMIN";
-            return new CustomUserDetails(
-                    korisnik.getId(),  // Čuvamo ID korisnika
-                    korisnik.getUsername(),
-                    korisnik.getPassword(),
-                    List.of(new SimpleGrantedAuthority("ROLE_" + role))
-            );
-        }
-
-        // Ako nije pronađen korisnik, tražimo firmu u bazi firmi
-        Optional<Firma> firmaOpt = firmaRepository.findByUsername(username);
-        if (firmaOpt.isPresent()) {
-            Firma firma = firmaOpt.get();
-
-            return new CustomUserDetails(
-                    firma.getId(),  // Čuvamo ID firme
-                    firma.getUsername(),
-                    firma.getPassword(),
-                    List.of(new SimpleGrantedAuthority("ROLE_FIRMA"))
-            );
-        }
-
-        throw new UsernameNotFoundException("Nalog sa korisničkim imenom: " + username + " ne postoji.");
+        return new CustomUserDetails(
+                korisnik.getId(),
+                korisnik.getUsername(),
+                korisnik.getPassword(),
+                korisnik.getIdRole()
+        );
     }
-
 
 
     public long countAll() {
-        long broj = korisniciRepository.count();
-
-
-        return broj;
+        return korisniciRepository.count();
     }
-
-
-
-
 }

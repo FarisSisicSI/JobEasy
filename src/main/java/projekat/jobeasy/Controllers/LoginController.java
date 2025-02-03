@@ -1,6 +1,8 @@
 package projekat.jobeasy.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,17 +37,19 @@ public class LoginController {
     }
 
     @GetMapping("/welcome")
-    public String welcome( Model model) {
+    public String welcome(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Ulogovani korisnik: " + authentication.getName());
+        System.out.println("Uloge korisnika: " + authentication.getAuthorities());
+
         long ukupanBrojPozicija = pozicijaService.countAll();
-        model.addAttribute("ukupanBrojPozicija", ukupanBrojPozicija);
-
-        model.addAttribute("pozicije", pozicijaService.pronadjiSveOtvorenePozicije());
-
         long ukupanBrojKorisnika = korisnikService.countAll();
-        model.addAttribute("ukupanBrojKorisnika", ukupanBrojKorisnika);
-
         long ukupanBrojFirmi = firmaService.countAll();
+
+        model.addAttribute("ukupanBrojPozicija", ukupanBrojPozicija);
+        model.addAttribute("ukupanBrojKorisnika", ukupanBrojKorisnika);
         model.addAttribute("ukupanBrojFirmi", ukupanBrojFirmi);
+        model.addAttribute("pozicije", pozicijaService.pronadjiSveOtvorenePozicije());
 
         return "welcome";
     }
