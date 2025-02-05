@@ -27,7 +27,7 @@ public class Korisnici {
     private String adresa;
 
     @NotNull
-    @Size(min = 9, max = 15)
+    @Size(min = 9)
     private String telefon;
 
     private String vozackaDozvola;

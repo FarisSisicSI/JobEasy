@@ -3,8 +3,6 @@
 <head>
     <title>JobEasy - Registracija</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}" />
     <style>
         .form-container {
             max-width: 600px;
@@ -14,63 +12,67 @@
             border-radius: 12px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
-
-        .form-container h1 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-            color: #343a40;
-        }
-
-        .form-container label {
-            font-weight: bold;
-            color: #495057;
-        }
-
-        .form-container .form-control {
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            padding: 10px;
-            transition: box-shadow 0.2s ease-in-out;
-        }
-
-        .form-container .form-control:focus {
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
-            border-color: #80bdff;
-        }
     </style>
 </head>
 <body>
-
 <div class="form-container">
     <h1>Registracija korisnika</h1>
     <form th:action="@{/registracija}" th:object="${korisnik}" method="post">
         <div class="form-group mb-3">
             <label for="ime">Ime:</label>
-            <input type="text" th:field="*{ime}" id="ime" class="form-control" placeholder="Unesite ime" required/>
+            <input type="text" th:field="*{ime}" id="ime" class="form-control" required/>
         </div>
-
         <div class="form-group mb-3">
             <label for="prezime">Prezime:</label>
-            <input type="text" th:field="*{prezime}" id="prezime" class="form-control" placeholder="Unesite prezime" required/>
+            <input type="text" th:field="*{prezime}" id="prezime" class="form-control" required/>
         </div>
-
+        <div class="form-group mb-3">
+            <label for="adresa">Adresa:</label>
+            <input type="text" th:field="*{adresa}" id="adresa" class="form-control" required/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="telefon">Telefon:</label>
+            <input type="text" th:field="*{telefon}" id="telefon" class="form-control" required/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="vozackaDozvola">Vozačka dozvola:</label>
+            <input type="text" th:field="*{vozackaDozvola}" id="vozackaDozvola" class="form-control"/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="cv">CV:</label>
+            <input type="file" th:field="*{cv}" id="cv" class="form-control"/>
+        </div>
         <div class="form-group mb-3">
             <label for="email">Email:</label>
-            <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Unesite email" required/>
+            <input type="email" th:field="*{email}" id="email" class="form-control" required/>
         </div>
-
         <div class="form-group mb-3">
             <label for="username">Korisničko ime:</label>
-            <input type="text" th:field="*{username}" id="username" class="form-control" placeholder="Unesite korisničko ime" required/>
+            <input type="text" th:field="*{username}" id="username" class="form-control" required/>
         </div>
-
         <div class="form-group mb-3">
             <label for="password">Lozinka:</label>
-            <input type="password" th:field="*{password}" id="password" class="form-control" placeholder="Unesite lozinku" required/>
+            <input type="password" th:field="*{password}" id="password" class="form-control" required/>
         </div>
-
+        <div class="form-group mb-3">
+            <label for="opcina">Općina:</label>
+            <select th:field="*{opcina}" id="opcina" class="form-control" required>
+                <option th:each="opcina : ${opcine}" th:value="${opcina.id}" th:text="${opcina.naziv}"></option>
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label for="zanimanje1">Prvo zanimanje:</label>
+            <select th:field="*{zanimanje1}" id="zanimanje1" class="form-control" required>
+                <option th:each="zanimanje : ${zanimanja}" th:value="${zanimanje.id}" th:text="${zanimanje.naziv}"></option>
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label for="zanimanje2">Drugo zanimanje (opcionalno):</label>
+            <select th:field="*{zanimanje2}" id="zanimanje2" class="form-control">
+                <option value="">Nema</option>
+                <option th:each="zanimanje : ${zanimanja}" th:value="${zanimanje.id}" th:text="${zanimanje.naziv}"></option>
+            </select>
+        </div>
         <div class="text-center">
             <button class="btn btn-outline-success" type="submit">Registruj se</button>
             <a th:href="@{/welcome}" class="btn btn-outline-secondary">Nazad</a>

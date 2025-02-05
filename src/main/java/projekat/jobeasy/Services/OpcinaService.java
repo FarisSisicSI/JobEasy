@@ -17,4 +17,5 @@ public class OpcinaService {
     public List<Opcina> pronadjiSveOpcine() {
         return opcinaRepository.findAll();
     }
+
 }
