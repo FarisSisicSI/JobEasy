@@ -38,8 +38,8 @@ public class Pozicije {
     @NotNull
     private LocalDate datumDo = LocalDate.now().plusMonths(1);
 
-    @ManyToMany(mappedBy = "upisanePozicije")
-    private List<Prijava> prijava = new ArrayList<>();
+    @OneToMany(mappedBy = "pozicija")
+    private List<Prijava> prijave = new ArrayList<>();
 
     // Constructors
     public Pozicije() {}
@@ -75,6 +75,6 @@ public class Pozicije {
     public LocalDate getDatumDo() { return datumDo; }
     public void setDatumDo(LocalDate datumDo) { this.datumDo = datumDo; }
 
-    public List<Prijava> getPrijava() { return prijava; }
-    public void setPrijava(List<Prijava> prijava) { this.prijava = prijava; }
+    public List<Prijava> getPrijave() { return prijave; }
+    public void setPrijave(List<Prijava> prijave) { this.prijave = prijave; }
 }

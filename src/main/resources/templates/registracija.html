@@ -61,16 +61,21 @@
             </select>
         </div>
         <div class="form-group mb-3">
-            <label for="zanimanje1">Prvo zanimanje:</label>
+            <label for="zanimanje1">Zanimanje:</label>
             <select th:field="*{zanimanje1}" id="zanimanje1" class="form-control" required>
-                <option th:each="zanimanje : ${zanimanja}" th:value="${zanimanje.id}" th:text="${zanimanje.naziv}"></option>
+                <option th:each="zanimanje : ${zanimanja}"
+                        th:value="${zanimanje.id}"
+                        th:text="${zanimanje.naziv + ' - ' + zanimanje.sprema.naziv}">
+                </option>
             </select>
         </div>
         <div class="form-group mb-3">
-            <label for="zanimanje2">Drugo zanimanje (opcionalno):</label>
-            <select th:field="*{zanimanje2}" id="zanimanje2" class="form-control">
-                <option value="">Nema</option>
-                <option th:each="zanimanje : ${zanimanja}" th:value="${zanimanje.id}" th:text="${zanimanje.naziv}"></option>
+            <label for="zanimanje2">Zanimanje:</label>
+            <select th:field="*{zanimanje2}" id="zanimanje2" class="form-control" required>
+                <option th:each="zanimanje : ${zanimanja}"
+                        th:value="${zanimanje.id}"
+                        th:text="${zanimanje.naziv + ' - ' + zanimanje.sprema.naziv}">
+                </option>
             </select>
         </div>
         <div class="text-center">

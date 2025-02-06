@@ -1,103 +1,54 @@
 package projekat.jobeasy.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import projekat.jobeasy.Models.Korisnici;
+import projekat.jobeasy.Models.Pozicije;
 import projekat.jobeasy.Models.Prijava;
-import projekat.jobeasy.Services.PozicijaService;
-import projekat.jobeasy.Services.PrijavaService;
+import projekat.jobeasy.Repositories.KorisniciRepository;
+import projekat.jobeasy.Repositories.PozicijaRepository;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
-
+import projekat.jobeasy.Repositories.PrijavaRepository;
 
 @Controller
-@RequestMapping("/prijava")
 public class PrijavaController {
 
     @Autowired
-    private PozicijaService pozicijaService;
+    private PrijavaRepository prijavaRepository;
+
     @Autowired
-    private PrijavaService prijavaService;
+    private PozicijaRepository pozicijeRepository;
 
-    @GetMapping
-    public String listaPrijava(Model model) {
-        model.addAttribute("prijava", prijavaService.pronadjiSvePrijave());
-        return "prijava_pregled";
-    }
+    @Autowired
+    private KorisniciRepository korisnikRepository;
 
+    @PostMapping("/prijave/novaprijava")
+    public String prijaviSeNaPoziciju(@RequestParam Long pozicijaId,
+                                      @AuthenticationPrincipal UserDetails userDetails) {
 
-
-    @GetMapping("/novaprijava")
-    public String prijavaNaPoziciju(Model model) {
-        model.addAttribute("prijava", new Prijava());
-        model.addAttribute("pozicije", pozicijaService.pronadjiSveOtvorenePozicije());
-        return "prijava_na_poziciju";
-    }
-
-    @PostMapping("/novaprijava")
-    public String dodajPrijavu(
-            @ModelAttribute Prijava prijava,
-            @RequestParam(value = "pozicijaIds", required = false) List<Long> pozicijaIds,
-            @RequestParam("cvFile") MultipartFile cvFile
-    ) {
-        try {
-            // Definišite direktorijum za čuvanje fajlova
-            String uploadDir = "cvprijave/";
-            Path uploadPath = Paths.get(uploadDir);
+        Korisnici korisnik = korisnikRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Korisnik nije pronađen"));
 
 
+        Pozicije pozicija = pozicijeRepository.findById(pozicijaId)
+                .orElseThrow(() -> new RuntimeException("Pozicija ne postoji"));
 
-            String fileName = cvFile.getOriginalFilename();
-            assert fileName != null;
-            Path filePath = uploadPath.resolve(fileName);
 
-            // Sačuvajte fajl
-            Files.copy(cvFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            // Sačuvajte ime fajla u modelu
-            prijava.setCv(fileName);
-
-        } catch (IOException e) {
-            System.err.println("Greška prilikom čuvanja fajla: " + e.getMessage());
-            e.printStackTrace();
+        boolean vecPrijavljen = prijavaRepository.existsByKorisnikAndPozicija(korisnik, pozicija);
+        if (vecPrijavljen) {
+            return "redirect:/pozicije?error=Vec ste prijavljeni na ovu poziciju";
         }
 
 
-        prijavaService.spasiPrijavu(prijava, pozicijaIds);
+        Prijava prijava = new Prijava(korisnik, pozicija);
+        prijavaRepository.save(prijava);
 
-        return "redirect:/welcome";
+        return "redirect:/pozicije?success=Prijava uspesna";
     }
-
-
-
-    @GetMapping("/edit/{id}")
-    public String prikaziEditPrijave(@PathVariable Long id, Model model) {
-        prijavaService.pronadjiPrijavuPoId(id).ifPresent(prijava -> model.addAttribute("prijava", prijava));
-        model.addAttribute("pozicije", pozicijaService.pronadjiSveOtvorenePozicije());
-        return "prijava_edit";
-    }
-
-    @PostMapping("/edit")
-    public String editPrijavu(@ModelAttribute Prijava prijava, @RequestParam(value = "pozicijaIds", required = false) List<Long> pozicijaIds) {
-        prijavaService.UpdatePrijava(prijava, pozicijaIds);
-        return "redirect:/prijava";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String izbrisiPrijavu(@PathVariable Long id) {
-        prijavaService.izbrisiPrijavu(id);
-        return "redirect:/prijava";
-    }
-
-
-
 
 
 }

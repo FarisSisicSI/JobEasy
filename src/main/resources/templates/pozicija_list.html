@@ -55,9 +55,7 @@
         <li class="nav-item">
           <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/pozicije}">Lista pozicija</a></button>
         </li>
-        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-          <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a></button>
-        </li>
+
         <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
           <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/korisnici}">Pregled korisnika</a></button>
         </li>
@@ -107,14 +105,34 @@
         <td th:text="${pozicija.datumDo}"></td>
         <td>
           <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
-          <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="btn btn-outline-success btn-sm">Prijavi se</a>
-          <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}" class="btn btn-outline-warning btn-sm">Uredi</a>
-          <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}" class="btn btn-outline-danger btn-sm">Izbriši</a>
+
+          <form th:action="@{/prijave/novaprijava}" method="post">
+            <input type="hidden" name="pozicijaId" th:value="${pozicija.id}"/>
+            <button type="submit" class="btn btn-outline-success btn-sm"
+                    th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+              Prijavi se
+            </button>
+          </form>
+
+          <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}"
+             th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}"
+             class="btn btn-outline-warning btn-sm">Uredi</a>
+
+          <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}"
+             th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}"
+             class="btn btn-outline-danger btn-sm">Izbriši</a>
         </td>
+
       </tr>
       </tbody>
     </table>
   </div>
 </div>
+
+
+
+
+
+
 </body>
 </html>

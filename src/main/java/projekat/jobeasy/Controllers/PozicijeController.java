@@ -73,6 +73,7 @@ public class PozicijeController {
         model.addAttribute("pozicija", new Pozicije());
         model.addAttribute("firme", firmaService.pronadjiSveFirme());
         model.addAttribute("zanimanja", zanimanjeService.pronadjiSvaZanimanja());
+
         return "pozicija_dodaj";
     }
 

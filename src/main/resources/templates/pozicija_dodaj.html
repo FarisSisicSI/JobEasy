@@ -49,7 +49,10 @@
         <div class="form-group mb-3">
             <label for="zanimanje">Zanimanje:</label>
             <select th:field="*{zanimanje}" id="zanimanje" class="form-control" required>
-                <option th:each="zanimanje : ${zanimanja}" th:value="${zanimanje.id}" th:text="${zanimanje.naziv}"></option>
+                <option th:each="zanimanje : ${zanimanja}"
+                        th:value="${zanimanje.id}"
+                        th:text="${zanimanje.naziv + ' - ' + zanimanje.sprema.naziv}">
+                </option>
             </select>
         </div>
         <div class="form-group mb-3">

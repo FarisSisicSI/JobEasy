@@ -39,18 +39,22 @@ public class AdminUserInitializer implements CommandLineRunner {
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("admin123")); // Default password
             admin.setEmail("admin@example.com");  // Primer email adrese
-            admin.setAdresa("Admin Street 1, Admin City"); // Primer adrese
+            admin.setAdresa("Admin Street 1"); // Primer adrese
             admin.setTelefon("123456789"); // Primer broja telefona
             admin.setVozackaDozvola("B"); // Primer vozačke dozvole
             admin.setCv("N/A"); // Nema CV za admina
 
-            // Dodela opcine
-            Opcina defaultOpcina = opcinaRepository.findById(1L)
+            // Automatsko dodeljivanje općine
+            Opcina defaultOpcina = opcinaRepository.findAll()
+                    .stream()
+                    .findFirst()
                     .orElseThrow(() -> new RuntimeException("Opcina nije pronađena!"));
             admin.setOpcina(defaultOpcina);
 
-            // Dodela zanimanja
-            Zanimanje defaultZanimanje = zanimanjeRepository.findById(1L)
+            // Automatsko dodeljivanje prvog zanimanja
+            Zanimanje defaultZanimanje = zanimanjeRepository.findAll()
+                    .stream()
+                    .findFirst()
                     .orElseThrow(() -> new RuntimeException("Zanimanje nije pronađeno!"));
             admin.setZanimanje1(defaultZanimanje);
             admin.setZanimanje2(null); // Nema drugog zanimanja
@@ -61,7 +65,8 @@ public class AdminUserInitializer implements CommandLineRunner {
             korisniciRepository.save(admin);
             System.out.println("Kreiran admin: 'admin' i lozinka: 'admin123'");
         } else {
-            System.out.println("Admin vec postoji!");
+            System.out.println("Admin već postoji!");
         }
     }
+
 }
