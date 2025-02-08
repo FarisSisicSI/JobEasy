@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Entity
 @Getter
@@ -32,7 +34,11 @@ public class Korisnici {
 
     private String vozackaDozvola;
 
-    private String cv;
+
+    @Transient
+    private MultipartFile cv;
+
+    private String cvFile;
 
     @NotNull
     @Email
@@ -69,7 +75,7 @@ public class Korisnici {
     public Korisnici() {}
 
     public Korisnici(Long id, String ime, String prezime, String adresa, String telefon, String vozackaDozvola,
-                     String cv, String email, String username, String password, Opcina opcina, Zanimanje zanimanje1,
+                     String cvFile, String email, String username, String password, Opcina opcina, Zanimanje zanimanje1,
                      Zanimanje zanimanje2, Integer idRole) {
         this.id = id;
         this.ime = ime;
@@ -77,7 +83,7 @@ public class Korisnici {
         this.adresa = adresa;
         this.telefon = telefon;
         this.vozackaDozvola = vozackaDozvola;
-        this.cv = cv;
+        this.cvFile = cvFile;
         this.email = email;
         this.username = username;
         this.password = password;

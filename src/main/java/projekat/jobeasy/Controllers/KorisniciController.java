@@ -74,7 +74,7 @@ public class KorisniciController {
             postojeciKorisnik.setAdresa(korisnik.getAdresa());
             postojeciKorisnik.setTelefon(korisnik.getTelefon());
             postojeciKorisnik.setVozackaDozvola(korisnik.getVozackaDozvola());
-            postojeciKorisnik.setCv(korisnik.getCv());
+            postojeciKorisnik.setCvFile(korisnik.getCvFile());
             postojeciKorisnik.setEmail(korisnik.getEmail());
             postojeciKorisnik.setUsername(korisnik.getUsername());
 

@@ -42,7 +42,7 @@ public class AdminUserInitializer implements CommandLineRunner {
             admin.setAdresa("Admin Street 1"); // Primer adrese
             admin.setTelefon("123456789"); // Primer broja telefona
             admin.setVozackaDozvola("B"); // Primer vozačke dozvole
-            admin.setCv("N/A"); // Nema CV za admina
+            admin.setCvFile("N/A"); // Nema CV za admina
 
             // Automatsko dodeljivanje općine
             Opcina defaultOpcina = opcinaRepository.findAll()

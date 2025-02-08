@@ -54,7 +54,7 @@ public class KorisnikService implements UserDetailsService {
             postojeciKorisnik.setAdresa(noviPodaci.getAdresa());
             postojeciKorisnik.setTelefon(noviPodaci.getTelefon());
             postojeciKorisnik.setVozackaDozvola(noviPodaci.getVozackaDozvola());
-            postojeciKorisnik.setCv(noviPodaci.getCv());
+            postojeciKorisnik.setCvFile(noviPodaci.getCvFile());
             postojeciKorisnik.setEmail(noviPodaci.getEmail());
             postojeciKorisnik.setUsername(noviPodaci.getUsername());
 

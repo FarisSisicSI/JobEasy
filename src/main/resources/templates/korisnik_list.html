@@ -67,9 +67,16 @@
     }
 
     .table-container {
-        margin: 0 auto;
-        max-width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
     }
+
+    .table {
+        width: 80%;
+    }
+
 
     h1 {
         text-align: center;
@@ -109,9 +116,10 @@
                 <td th:text="${korisnik.telefon}"></td>
                 <td th:text="${korisnik.vozackaDozvola ?: 'N/A'}"></td>
                 <td>
-                    <a th:if="${korisnik.cv}" th:href="@{'/cv/' + ${korisnik.cv}}" target="_blank">Pogledaj</a>
-                    <span th:if="${korisnik.cv == null}">Nema CV</span>
+                    <a th:if="${korisnik.cvFile != null and not #strings.isEmpty(korisnik.cvFile)}"
+                       th:href="@{'/cv/' + ${korisnik.cvFile}}" target="_blank">Pogledaj</a>
                 </td>
+
                 <td th:text="${korisnik.email}"></td>
                 <td th:text="${korisnik.username}"></td>
                 <td th:text="${korisnik.opcina.naziv}"></td>
