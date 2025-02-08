@@ -14,6 +14,7 @@ import projekat.jobeasy.Services.ZanimanjeService;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/pozicije")
@@ -42,9 +43,16 @@ public class PozicijeController {
         return "pozicija_pregled";
     }
 
+
     @GetMapping("/edit/{pozicijaId}")
     public String editovanjePozicije(@PathVariable Long pozicijaId, Model model) {
-        pozicijaService.pronadjiPozicijuId(pozicijaId).ifPresent(pozicija -> model.addAttribute("pozicija", pozicija));
+        pozicijaService.pronadjiPozicijuId(pozicijaId).ifPresent(pozicija -> {
+            model.addAttribute("pozicija", pozicija);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            model.addAttribute("datumOdFormatted", pozicija.getDatumOd() != null ? pozicija.getDatumOd().format(formatter) : "");
+            model.addAttribute("datumDoFormatted", pozicija.getDatumDo() != null ? pozicija.getDatumDo().format(formatter) : "");
+        });
         return "pozicija_edit";
     }
 

@@ -3,7 +3,6 @@
 <head>
     <title>JobEasy - Editovanje Pozicije</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}"/>
     <style>
         body {
@@ -75,25 +74,28 @@
         <div class="form-group">
             <label for="firma">Firma:</label>
             <input type="text" id="firma" th:value="${pozicija.firma.naziv}" readonly />
+            <input type="hidden" th:field="*{firma.id}" />
         </div>
+
         <div class="form-group">
             <label for="zanimanje">Zanimanje:</label>
             <input type="text" id="zanimanje" th:value="${pozicija.zanimanje.naziv}" readonly />
+            <input type="hidden" th:field="*{zanimanje.id}" />
         </div>
         <div class="form-group">
             <label for="datumOd">Datum početka:</label>
-            <input type="date" id="datumOd" th:field="*{datumOd}" required />
+            <input type="date" id="datumOd" name="datumOd" th:value="${datumOdFormatted}" required />
         </div>
         <div class="form-group">
             <label for="datumDo">Datum završetka:</label>
-            <input type="date" id="datumDo" th:field="*{datumDo}" required />
+            <input type="date" id="datumDo" name="datumDo" th:value="${datumDoFormatted}" required />
         </div>
+
         <div class="button-group">
             <button type="submit" class="btn btn-outline-success">Sačuvaj</button>
-            <a href="/pozicije" class="btn btn-outline-warning">Nazad</a>
+            <a href="/pozicije" class="btn btn-secondary">Nazad</a>
         </div>
     </form>
 </div>
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

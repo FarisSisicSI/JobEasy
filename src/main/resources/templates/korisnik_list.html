@@ -10,38 +10,41 @@
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Desna strana navigacije -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/pozicije}">Lista pozicija</a></button>
+                    <a class="btn btn-light btn-sm mx-1 nav-link" th:href="@{/pozicije}">Lista pozicija</a>
                 </li>
                 <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a></button>
+                    <a class="btn btn-light btn-sm mx-1 nav-link" th:href="@{/prijava/novaprijava}">Prijava na poziciju</a>
                 </li>
                 <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/korisnici}">Pregled korisnika</a></button>
+                    <a class="btn btn-light btn-sm mx-1 nav-link" th:href="@{/korisnici}">Pregled korisnika</a>
                 </li>
                 <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                    <button class="btn btn-light btn-sm mx-1" type="button"><a class="nav-link" th:href="@{/firma}">Pregled firmi</a></button>
-
+                    <a class="btn btn-light btn-sm mx-1 nav-link" th:href="@{/firma}">Pregled firmi</a>
                 </li>
                 <li class="nav-item">
                     <button class="Btn">
-
-                        <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-
-                        <div class="text"><a class="nav-link" style="color:white;"  th:href="@{/logout}">Odjava</a></div>
+                        <div class="sign">
+                            <svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
+                        </div>
+                        <div class="text">
+                            <a class="nav-link" style="color:white;" th:href="@{/logout}">Odjava</a>
+                        </div>
                     </button>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+
 <style>
     .table {
         border-radius: 10px;
