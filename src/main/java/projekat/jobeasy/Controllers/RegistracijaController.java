@@ -15,6 +15,8 @@ import projekat.jobeasy.Services.VerificationTokenService;
 import projekat.jobeasy.Services.ZanimanjeService;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -100,7 +102,9 @@ public class RegistracijaController {
         emailService.sendEmail(korisnici.getEmail(), "Verifikacija naloga", verificationLink);
 
         model.addAttribute("message", "Registracija uspešna! Proverite vaš email za verifikaciju.");
-        return "redirect:/login";
+        return "redirect:/login?message=" + URLEncoder.encode("Registracija uspešna! Proverite vaš email za verifikaciju.", StandardCharsets.UTF_8);
+
+
     }
 
 

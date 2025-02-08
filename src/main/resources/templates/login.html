@@ -90,8 +90,14 @@
   <div class="error-message" th:if="${param.error}">
     <p th:text="${param.error}" class="error-message"></p>
   </div>
+  <div th:if="${param.logout}" class="success-message">
+    <p>Uspješno ste se odjavili.</p>
+  </div>
 
-  <!-- Login Form -->
+
+
+
+
   <form th:action="@{/login}" method="post" class="login-form">
     <div class="form-group">
       <label for="username">Korisničko ime:</label>
@@ -110,9 +116,7 @@
   </form>
 
 
-  <div th:if="${param.logout}" class="success-message">
-    <p>Uspješno ste se odjavili.</p>
-  </div>
+
 </div>
 </body>
 </html>
