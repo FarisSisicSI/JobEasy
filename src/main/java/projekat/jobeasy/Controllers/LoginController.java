@@ -42,7 +42,7 @@ public class LoginController {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
 
-        // Onemogućavanje keširanja kako bi se sprečilo vraćanje na stranicu nakon odjave
+
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "0");
@@ -52,23 +52,30 @@ public class LoginController {
 
     @GetMapping("/welcome")
     public String welcome(Model model, HttpServletResponse response) {
-        // Onemogućavanje keširanja kako bi korisnik morao ponovo da se prijavi ako se izlogovao
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "0");
 
-        // Provera da li je korisnik autentifikovan
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getName())) {
             return "redirect:/login";
         }
 
-        // Dodavanje statističkih podataka na model
-        model.addAttribute("ukupanBrojPozicija", pozicijaService.countAll());
-        model.addAttribute("ukupanBrojKorisnika", korisnikService.countAll());
-        model.addAttribute("ukupanBrojFirmi", firmaService.countAll());
-        model.addAttribute("pozicije", pozicijaService.pronadjiSveOtvorenePozicije());
+        String username = authentication.getName();
+        var optionalFirma = firmaService.pronadjiFirmuUsername(username);
+
+        if (optionalFirma.isPresent()) {
+            // Ako firma postoji, koristi je
+            model.addAttribute("pozicije", pozicijaService.findByFirma(optionalFirma.get()));
+        } else {
+            // Ako nije firma, prikazi sve pozicije
+            model.addAttribute("pozicije", pozicijaService.pronadjiSveOtvorenePozicije());
+            model.addAttribute("ukupanBrojPozicija", pozicijaService.countAll());
+            model.addAttribute("ukupanBrojKorisnika", korisnikService.countAll());
+            model.addAttribute("ukupanBrojFirmi", firmaService.countAll());
+        }
 
         return "welcome";
     }
+
 }

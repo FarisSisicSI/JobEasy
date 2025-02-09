@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CustomUserDetails extends User {
     private final Long id;
-    private final Integer idRole; // Dodajemo idRole da znamo koja je uloga korisnika
+    private final Integer idRole;
 
     public CustomUserDetails(Long id, String username, String password, Integer idRole) {
         super(username, password, getAuthoritiesFromRole(idRole));

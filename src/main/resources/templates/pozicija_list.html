@@ -88,7 +88,6 @@
       <thead>
       <tr>
         <th>Naziv pozicije</th>
-        <th>Firma</th>
         <th>Zanimanje</th>
         <th>Kratak opis</th>
         <th>Datum od</th>
@@ -99,31 +98,15 @@
       <tbody>
       <tr th:each="pozicija : ${pozicije}">
         <td th:text="${pozicija.nazivPozicije}"></td>
-        <td th:text="${pozicija.firma.naziv}"></td>
         <td th:text="${pozicija.zanimanje.naziv}"></td>
         <td th:text="${pozicija.kratakOpisPozicije}"></td>
         <td th:text="${pozicija.datumOd}"></td>
         <td th:text="${pozicija.datumDo}"></td>
         <td>
           <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
-
-          <form th:action="@{/prijave/novaprijava}" method="post">
-            <input type="hidden" name="pozicijaId" th:value="${pozicija.id}"/>
-            <button type="submit" class="btn btn-outline-success btn-sm"
-                    th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-              Prijavi se
-            </button>
-          </form>
-
-          <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}"
-             th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}"
-             class="btn btn-outline-warning btn-sm">Uredi</a>
-
-          <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}"
-             th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}"
-             class="btn btn-outline-danger btn-sm">Izbriši</a>
+          <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" class="btn btn-outline-warning btn-sm">Uredi</a>
+          <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" class="btn btn-outline-danger btn-sm">Izbriši</a>
         </td>
-
       </tr>
       </tbody>
     </table>

@@ -2,6 +2,7 @@ package projekat.jobeasy.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import projekat.jobeasy.Models.Firma;
 import projekat.jobeasy.Models.Pozicije;
 import projekat.jobeasy.Repositories.PozicijaRepository;
 
@@ -45,4 +46,10 @@ public class PozicijaService {
     public void izbrisiPoziciju(Long id) {
         pozicijaRepository.deleteById(id);
     }
+
+    public List<Pozicije> findByFirma(Firma firma) {
+        return pozicijaRepository.findByFirma(firma);
+
+    }
+
 }

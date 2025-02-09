@@ -15,6 +15,7 @@ import projekat.jobeasy.Services.ZanimanjeService;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequestMapping("/pozicije")
@@ -110,4 +111,8 @@ public class PozicijeController {
         pozicijaService.sacuvajPoziciju(pozicija);
         return "redirect:/pozicije";
     }
+
+
+
+
 }

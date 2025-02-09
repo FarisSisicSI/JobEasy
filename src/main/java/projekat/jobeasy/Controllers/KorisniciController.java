@@ -55,7 +55,6 @@ public class KorisniciController {
     public String editovanjeKorisnika(@PathVariable Long korisnikId, Model model) {
         korisnikService.pronadjiKorisnikaId(korisnikId).ifPresent(korisnik -> model.addAttribute("korisnik", korisnik));
 
-        // Dodaj liste opcina i zanimanja za dropdown menije
         List<Opcina> opcine = opcinaService.pronadjiSveOpcine();
         List<Zanimanje> zanimanja = zanimanjeService.pronadjiSvaZanimanja();
 

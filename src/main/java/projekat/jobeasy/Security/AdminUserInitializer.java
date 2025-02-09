@@ -44,23 +44,23 @@ public class AdminUserInitializer implements CommandLineRunner {
             admin.setVozackaDozvola("B"); // Primer vozačke dozvole
             admin.setCvFile("N/A"); // Nema CV za admina
 
-            // Automatsko dodeljivanje općine
+
             Opcina defaultOpcina = opcinaRepository.findAll()
                     .stream()
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Opcina nije pronađena!"));
             admin.setOpcina(defaultOpcina);
 
-            // Automatsko dodeljivanje prvog zanimanja
+
             Zanimanje defaultZanimanje = zanimanjeRepository.findAll()
                     .stream()
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Zanimanje nije pronađeno!"));
             admin.setZanimanje1(defaultZanimanje);
-            admin.setZanimanje2(null); // Nema drugog zanimanja
+            admin.setZanimanje2(null);
 
-            admin.setIdRole(2); // Role admina
-            admin.setEnabled(true); // Aktiviran nalog
+            admin.setIdRole(2);
+            admin.setEnabled(true);
 
             korisniciRepository.save(admin);
             System.out.println("Kreiran admin: 'admin' i lozinka: 'admin123'");
