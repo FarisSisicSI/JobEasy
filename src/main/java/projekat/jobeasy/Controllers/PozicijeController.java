@@ -8,14 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import projekat.jobeasy.Models.Firma;
 import projekat.jobeasy.Models.Pozicije;
+import projekat.jobeasy.Models.Prijava;
 import projekat.jobeasy.Services.FirmaService;
 import projekat.jobeasy.Services.PozicijaService;
+import projekat.jobeasy.Services.PrijavaService;
 import projekat.jobeasy.Services.ZanimanjeService;
 
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/pozicije")
@@ -24,12 +27,14 @@ public class PozicijeController {
     private final PozicijaService pozicijaService;
     private final FirmaService firmaService;
     private final ZanimanjeService zanimanjeService;
+    private final PrijavaService prijavaService;
 
     @Autowired
-    public PozicijeController(PozicijaService pozicijaService, FirmaService firmaService, ZanimanjeService zanimanjeService) {
+    public PozicijeController(PozicijaService pozicijaService, FirmaService firmaService, ZanimanjeService zanimanjeService, PrijavaService prijavaService) {
         this.pozicijaService = pozicijaService;
         this.firmaService = firmaService;
         this.zanimanjeService = zanimanjeService;
+        this.prijavaService = prijavaService;
     }
 
     @GetMapping
@@ -111,6 +116,23 @@ public class PozicijeController {
         pozicijaService.sacuvajPoziciju(pozicija);
         return "redirect:/pozicije";
     }
+
+    @GetMapping("/korisnici/prijavljeni/{pozicijaId}")
+    public String pregledPrijavljenihKorisnika(@PathVariable Long pozicijaId, Model model) {
+        // Dohvatite poziciju na temelju ID-a
+        Pozicije pozicija = pozicijaService.pronadjiPozicijuId(pozicijaId).orElse(null);
+
+        // Dohvatite sve prijave vezane za tu poziciju
+        List<Prijava> prijave = prijavaService.pronadjiPrijaveZaPoziciju(pozicijaId);
+
+        // Dodajte naziv pozicije i prijave u model
+        model.addAttribute("pozicija", pozicija);
+        model.addAttribute("prijave", prijave);
+
+        return "korisnik_prijava"; // Naziv HTML datoteke
+    }
+
+
 
 
 

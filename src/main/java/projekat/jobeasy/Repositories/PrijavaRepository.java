@@ -6,7 +6,11 @@ import projekat.jobeasy.Models.Korisnici;
 import projekat.jobeasy.Models.Pozicije;
 import projekat.jobeasy.Models.Prijava;
 
+import java.util.List;
+
 @Repository
 public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
     boolean existsByKorisnikAndPozicija(Korisnici korisnik, Pozicije pozicija);
+    List<Prijava> findByPozicijaId(Long pozicijaId);
+
 }

@@ -12,6 +12,7 @@ import projekat.jobeasy.Repositories.PrijavaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PrijavaService {
@@ -50,4 +51,10 @@ public class PrijavaService {
         }
         prijavaRepository.deleteById(id);
     }
+
+
+    public List<Prijava> pronadjiPrijaveZaPoziciju(Long pozicijaId) {
+        return prijavaRepository.findByPozicijaId(pozicijaId);
+    }
+
 }

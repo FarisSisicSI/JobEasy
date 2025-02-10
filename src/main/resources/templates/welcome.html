@@ -20,6 +20,11 @@
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
   }
+  .table-container {
+    margin: 0 auto;
+    max-width: 90%;
+  }
+
   .table {
     border-radius: 10px;
     overflow: hidden;
@@ -43,9 +48,8 @@
     background: rgba(0, 123, 255, 0.1);
   }
 
-  .table-container {
-    margin: 0 auto;
-    max-width: 80%;
+  .d-flex.gap-2 {
+    gap: 8px;
   }
 
   .container {
@@ -110,6 +114,13 @@
     width: 80%;
     margin: 0 auto;
   }
+
+  button {
+    margin: 0;
+    padding: 5px 10px;
+    vertical-align: middle;
+  }
+
 
 </style>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -189,7 +200,7 @@
   <div class="table-container">
     <table class="table table-hover text-center">
       <div class="d-flex justify-content-end mb-3">
-        <a class="nav-link" th:href="@{/pozicije/novapozicija}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}" >
+        <a class="nav-link" th:href="@{/pozicije/novapozicija}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}">
           <button class="btn btn-outline-success btn-sm mx-1" type="button"><b>Nova pozicija</b></button>
         </a>
       </div>
@@ -201,6 +212,7 @@
         <th>Datum od</th>
         <th>Datum do</th>
         <th>Radnja</th>
+        <th>Pregled Aplikanata</th>
       </tr>
       </thead>
       <tbody>
@@ -210,10 +222,15 @@
         <td th:text="${pozicija.kratakOpisPozicije}"></td>
         <td th:text="${pozicija.datumOd}"></td>
         <td th:text="${pozicija.datumDo}"></td>
-        <td class="d-flex justify-content-center">
-          <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
-          <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" class="btn btn-outline-warning btn-sm">Uredi</a>
-          <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" class="btn btn-outline-danger btn-sm">Izbriši</a>
+        <td>
+          <div class="d-flex justify-content-center gap-2">
+            <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
+            <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" class="btn btn-outline-warning btn-sm">Uredi</a>
+            <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" class="btn btn-outline-danger btn-sm">Izbriši</a>
+          </div>
+        </td>
+        <td>
+          <a th:href="@{'/pozicije/korisnici/prijavljeni/' + ${pozicija.id}}" class="btn btn-outline-light btn-sm">Pregled</a>
         </td>
       </tr>
       </tbody>
