@@ -40,14 +40,14 @@ public class PrijavaController {
 
         boolean vecPrijavljen = prijavaRepository.existsByKorisnikAndPozicija(korisnik, pozicija);
         if (vecPrijavljen) {
-            return "redirect:/pozicije?error=Vec ste prijavljeni na ovu poziciju";
+            return "redirect:/welcome?error=Vec ste prijavljeni na ovu poziciju";
         }
 
 
         Prijava prijava = new Prijava(korisnik, pozicija);
         prijavaRepository.save(prijava);
 
-        return "redirect:/pozicije?success=Prijava uspesna";
+        return "redirect:/welcome?success=Prijava uspesna";
     }
 
 
