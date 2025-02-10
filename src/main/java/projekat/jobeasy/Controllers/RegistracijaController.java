@@ -97,7 +97,7 @@ public class RegistracijaController {
 
         // Generiši token i pošalji email
         String token = tokenService.generateVerificationToken(korisnici);
-        String verificationLink = "https://jobeasy-stranica.onrender.com/api/v1/verify?token=" + token;
+        String verificationLink = "http://localhost:8080/api/v1/verify?token=" + token;
 
         emailService.sendEmail(korisnici.getEmail(), "Verifikacija naloga", verificationLink);
 
