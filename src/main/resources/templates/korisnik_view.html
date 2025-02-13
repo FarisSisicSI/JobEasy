@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>JobEasy - Pregled pozicije</title>
+  <title>JobEasy - Moj Profil</title>
   <link rel="icon" type="image/png" th:href="@{/css/favicon.png}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}"/>
-
 </head>
 <style>
+
+  .table-container {
+    margin: 0 auto;
+    max-width: 90%;
+  }
+
+  .table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    border: none;
+    background-color: #ffffff;
+    padding: 15px;
+    margin-top: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .table th,
+  .table td {
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .table-hover tbody tr:hover {
+    background: rgba(0, 123, 255, 0.1);
+  }
+
 
   .profile-container {
     margin: 0 auto;
@@ -44,7 +71,6 @@
     margin-top: 15px;
   }
 </style>
-<body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
@@ -74,28 +100,56 @@
     </div>
   </div>
 </nav>
+<body>
 
 <div class="container profile-container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <h3 class="text-center">Pregled pozicije</h3>
+      <h3 class="text-center">Pregled profila</h3>
       <div class="card profile-card">
         <div class="card-body p-4">
           <ul class="list-group list-group-flush text-center">
-            <li class="list-group-item"><strong>Naziv pozicije:</strong> <span th:text="${pozicija.nazivPozicije}"></span></li>
-            <li class="list-group-item"><strong>Opis:</strong> <span th:text="${pozicija.kratakOpisPozicije}"></span></li>
-            <li class="list-group-item" th:if="${pozicija.firma != null}"><strong>Firma:</strong> <span th:text="${pozicija.firma.naziv}"></span></li>
-            <li class="list-group-item" th:if="${pozicija.zanimanje != null}"><strong>Zanimanje:</strong> <span th:text="${pozicija.zanimanje.naziv}"></span></li>
-            <li class="list-group-item"><strong>Trajanje:</strong> Od: <span th:text="${pozicija.datumOd}"></span> Do: <span th:text="${pozicija.datumDo}"></span></li>
+            <li class="list-group-item"><strong>Ime:</strong> <span th:text="${korisnik.ime}"></span></li>
+            <li class="list-group-item"><strong>Prezime:</strong> <span th:text="${korisnik.prezime}"></span></li>
+            <li class="list-group-item"><strong>Email:</strong> <span th:text="${korisnik.email}"></span></li>
+            <li class="list-group-item"><strong>Broj telefona:</strong> <span th:text="${korisnik.telefon}"></span></li>
+            <li class="list-group-item"><strong>Općina:</strong> <span th:text="${korisnik.opcina.naziv}"></span></li>
+            <li class="list-group-item"><strong>Adresa:</strong> <span th:text="${korisnik.adresa}"></span></li>
           </ul>
-          <div class="profile-actions text-center mt-3">
-            <a href="/welcome" class="btn btn-outline-warning ">Nazad</a>
+          <div class="profile-actions">
+            <a th:if="${korisnik.cvFile != null and not #strings.isEmpty(korisnik.cvFile)}"
+               th:href="@{'/cv/' + ${korisnik.cvFile}}" target="_blank" class="btn btn-outline-success btn-sm">Pogledaj CV</a>
+            <a th:href="@{/korisnici/edit/{id}(id=${korisnik.id})}" class="btn btn-outline-warning btn-sm">Uredi</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+<div class="container mt-5">
+  <h3 class="text-center">Pozicije na koje ste se prijavili</h3>
+  <table class="table table-hover text-center">
+    <thead>
+    <tr>
+      <th>Naziv pozicije</th>
+      <th>Firma</th>
+      <th>Zanimanje</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="prijava : ${prijavljenePozicije}">
+      <td th:text="${prijava.pozicija.nazivPozicije}"></td>
+      <td th:text="${prijava.pozicija.firma.naziv}"></td>
+      <td th:text="${prijava.pozicija.zanimanje.naziv}"></td>
+      <td>Nema</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
 
 </body>
 </html>

@@ -44,7 +44,7 @@ public class RegistracijaController {
     @Autowired
     private OpcinaService opcinaService;
 
-    private static final String UPLOAD_DIR = System.getProperty("user.dir") + "/cvprijave/";
+    public static final String UPLOAD_DIR = System.getProperty("user.dir") + "/cvprijave/";
 
     @GetMapping
     public String registracijaForma(Model model) {

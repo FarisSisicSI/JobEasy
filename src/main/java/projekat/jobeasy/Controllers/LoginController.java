@@ -9,9 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import projekat.jobeasy.Security.CustomUserDetails;
 import projekat.jobeasy.Services.FirmaService;
 import projekat.jobeasy.Services.KorisnikService;
 import projekat.jobeasy.Services.PozicijaService;
+import projekat.jobeasy.Services.PrijavaService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -19,11 +24,13 @@ public class LoginController {
     private final PozicijaService pozicijaService;
     private final KorisnikService korisnikService;
     private final FirmaService firmaService;
+    private final PrijavaService prijavaService;
 
-    public LoginController(PozicijaService pozicijaService, KorisnikService korisnikService, FirmaService firmaService) {
+    public LoginController(PozicijaService pozicijaService, KorisnikService korisnikService, FirmaService firmaService, PrijavaService prijavaService) {
         this.pozicijaService = pozicijaService;
         this.korisnikService = korisnikService;
         this.firmaService = firmaService;
+        this.prijavaService = prijavaService;
     }
 
     @GetMapping("/login")
@@ -64,18 +71,32 @@ public class LoginController {
         String username = authentication.getName();
         var optionalFirma = firmaService.pronadjiFirmuUsername(username);
 
+        Long korisnikId = null;
+        if (authentication.getPrincipal() instanceof CustomUserDetails userDetails) {
+            korisnikId = userDetails.getId(); // Dobijamo ID korisnika
+        }
+
         if (optionalFirma.isPresent()) {
-            // Ako firma postoji, koristi je
             model.addAttribute("pozicije", pozicijaService.findByFirma(optionalFirma.get()));
         } else {
-            // Ako nije firma, prikazi sve pozicije
-            model.addAttribute("pozicije", pozicijaService.pronadjiSveOtvorenePozicije());
+            var svePozicije = pozicijaService.pronadjiSveOtvorenePozicije();
+            model.addAttribute("pozicije", svePozicije);
             model.addAttribute("ukupanBrojPozicija", pozicijaService.countAll());
             model.addAttribute("ukupanBrojKorisnika", korisnikService.countAll());
             model.addAttribute("ukupanBrojFirmi", firmaService.countAll());
+
+            if (korisnikId != null) {
+                Map<Long, Boolean> prijavljenePozicije = new HashMap<>();
+                for (var pozicija : svePozicije) {
+                    prijavljenePozicije.put(pozicija.getId(), prijavaService.korisnikVecPrijavljen(korisnikId, pozicija.getId()));
+                }
+                model.addAttribute("prijavljenePozicije", prijavljenePozicije);
+            }
         }
 
         return "welcome";
     }
+
+
 
 }

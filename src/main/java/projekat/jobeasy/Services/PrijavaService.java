@@ -57,4 +57,13 @@ public class PrijavaService {
         return prijavaRepository.findByPozicijaId(pozicijaId);
     }
 
+    public boolean korisnikVecPrijavljen(Long korisnikId, Long pozicijaId) {
+        return prijavaRepository.existsByKorisnikIdAndPozicijaId(korisnikId, pozicijaId);
+    }
+
+    public List<Prijava> findByKorisnik(Korisnici korisnik) {
+        return prijavaRepository.findByKorisnik(korisnik);
+    }
+
+
 }

@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
     boolean existsByKorisnikAndPozicija(Korisnici korisnik, Pozicije pozicija);
+    boolean existsByKorisnikIdAndPozicijaId(Long korisnikId, Long pozicijaId);
     List<Prijava> findByPozicijaId(Long pozicijaId);
+    List<Prijava> findByKorisnik(Korisnici korisnik);
 
 }

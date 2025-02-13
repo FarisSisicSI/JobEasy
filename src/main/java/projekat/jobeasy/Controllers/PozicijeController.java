@@ -119,17 +119,17 @@ public class PozicijeController {
 
     @GetMapping("/korisnici/prijavljeni/{pozicijaId}")
     public String pregledPrijavljenihKorisnika(@PathVariable Long pozicijaId, Model model) {
-        // Dohvatite poziciju na temelju ID-a
+
         Pozicije pozicija = pozicijaService.pronadjiPozicijuId(pozicijaId).orElse(null);
 
-        // Dohvatite sve prijave vezane za tu poziciju
+
         List<Prijava> prijave = prijavaService.pronadjiPrijaveZaPoziciju(pozicijaId);
 
         // Dodajte naziv pozicije i prijave u model
         model.addAttribute("pozicija", pozicija);
         model.addAttribute("prijave", prijave);
 
-        return "korisnik_prijava"; // Naziv HTML datoteke
+        return "korisnik_prijava";
     }
 
 

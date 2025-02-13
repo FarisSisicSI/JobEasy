@@ -23,7 +23,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/registracija", "/api/v1/verify", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/prijava/novaprijava").hasAnyRole("USER")
+                        .requestMatchers("/prijava/novaprijava", "/korisnici/profil", "/korisnici/edit/{korisnikId}").hasAnyRole("USER")
                         .requestMatchers("/pozicije/**").hasAnyRole("USER", "ADMIN", "FIRMA")
                         .requestMatchers("/prijava/**", "/korisnici/**", "/firma/**").hasAnyRole("ADMIN", "FIRMA")
                         .anyRequest().authenticated()
