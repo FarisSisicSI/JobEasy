@@ -2,13 +2,18 @@ package projekat.jobeasy.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import projekat.jobeasy.Models.Firma;
+import projekat.jobeasy.Models.Korisnici;
 import projekat.jobeasy.Models.Pozicije;
 import projekat.jobeasy.Models.Prijava;
+import projekat.jobeasy.Repositories.KorisniciRepository;
+import projekat.jobeasy.Repositories.PrijavaRepository;
 import projekat.jobeasy.Services.FirmaService;
 import projekat.jobeasy.Services.PozicijaService;
 import projekat.jobeasy.Services.PrijavaService;
@@ -17,7 +22,9 @@ import projekat.jobeasy.Services.ZanimanjeService;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -28,13 +35,17 @@ public class PozicijeController {
     private final FirmaService firmaService;
     private final ZanimanjeService zanimanjeService;
     private final PrijavaService prijavaService;
+    private final KorisniciRepository korisniciRepository;
+    private final PrijavaRepository prijavaRepository;
 
     @Autowired
-    public PozicijeController(PozicijaService pozicijaService, FirmaService firmaService, ZanimanjeService zanimanjeService, PrijavaService prijavaService) {
+    public PozicijeController(PozicijaService pozicijaService, FirmaService firmaService, ZanimanjeService zanimanjeService, PrijavaService prijavaService, KorisniciRepository korisniciRepository, PrijavaRepository prijavaRepository) {
         this.pozicijaService = pozicijaService;
         this.firmaService = firmaService;
         this.zanimanjeService = zanimanjeService;
         this.prijavaService = prijavaService;
+        this.korisniciRepository = korisniciRepository;
+        this.prijavaRepository = prijavaRepository;
     }
 
     @GetMapping
@@ -44,8 +55,32 @@ public class PozicijeController {
     }
 
     @GetMapping("/{pozicijaId}")
-    public String pregledPozicije(@PathVariable Long pozicijaId, Model model) {
-        pozicijaService.pronadjiPozicijuId(pozicijaId).ifPresent(pozicija -> model.addAttribute("pozicija", pozicija));
+    public String pregledPozicije(@PathVariable Long pozicijaId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        Optional<Pozicije> optionalPozicija = pozicijaService.pronadjiPozicijuId(pozicijaId);
+
+        if (optionalPozicija.isEmpty()) {
+            return "redirect:/welcome?error=Pozicija ne postoji";
+        }
+
+        Pozicije pozicija = optionalPozicija.get();
+        model.addAttribute("pozicija", pozicija);
+
+        Map<Long, Boolean> prijavljenePozicije = new HashMap<>();
+
+        if (userDetails != null) {
+            Optional<Korisnici> korisnikOpt = korisniciRepository.findByUsername(userDetails.getUsername());
+            if (korisnikOpt.isPresent()) {
+                Korisnici korisnik = korisnikOpt.get();
+                List<Prijava> korisnikovePrijave = prijavaRepository.findByKorisnik(korisnik);
+                for (Prijava prijava : korisnikovePrijave) {
+                    prijavljenePozicije.put(prijava.getPozicija().getId(), true);
+                }
+            }
+        }
+
+        // Dodajemo mapu u model kako bi Thymeleaf mogao sakriti/prikazati dugme
+        model.addAttribute("prijavljenePozicije", prijavljenePozicije);
+
         return "pozicija_pregled";
     }
 
@@ -79,7 +114,7 @@ public class PozicijeController {
     @GetMapping("/delete/{pozicijaId}")
     public String brisanjePozicije(@PathVariable Long pozicijaId) {
         pozicijaService.izbrisiPoziciju(pozicijaId);
-        return "redirect:/pozicije";
+        return "redirect:/welcome";
     }
 
     @GetMapping("/novapozicija")

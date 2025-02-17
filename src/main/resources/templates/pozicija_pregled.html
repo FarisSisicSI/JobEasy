@@ -90,6 +90,22 @@
           </ul>
           <div class="profile-actions text-center mt-3">
             <a href="/welcome" class="btn btn-outline-warning ">Nazad</a>
+
+            <div th:if="${prijavljenePozicije != null and prijavljenePozicije.containsKey(pozicija.id)}">
+              <form th:action="@{/prijave/ponistiprijavu}" method="post">
+                <input type="hidden" name="pozicijaId" th:value="${pozicija.id}">
+                <button type="submit" class="btn btn-outline-danger">Poništi prijavu</button>
+              </form>
+            </div>
+
+            <div th:if="${prijavljenePozicije != null and !prijavljenePozicije.containsKey(pozicija.id)}">
+              <form th:action="@{/prijave/novaprijava}" method="post">
+                <input type="hidden" name="pozicijaId" th:value="${pozicija.id}">
+                <button type="submit" class="btn btn-outline-success">Prijavi se</button>
+              </form>
+            </div>
+
+
           </div>
         </div>
       </div>

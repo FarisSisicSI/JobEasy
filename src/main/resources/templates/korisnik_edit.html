@@ -146,7 +146,7 @@
 
     <div class="form-group">
       <label>Trenutni CV:</label>
-      <a th:if="${korisnik.cvFile}" th:href="@{/uploads/{file}(file=${korisnik.cvFile})}" target="_blank">
+      <a th:if="${korisnik.cvFile}" th:href="@{'/cv/' + ${korisnik.cvFile}}" target="_blank">
         Pogledaj CV
       </a>
       <span th:if="${korisnik.cvFile == null}">Nema CV-a</span>

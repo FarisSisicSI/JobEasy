@@ -38,8 +38,9 @@ public class Pozicije {
     @NotNull
     private LocalDate datumDo = LocalDate.now().plusMonths(1);
 
-    @OneToMany(mappedBy = "pozicija")
-    private List<Prijava> prijave = new ArrayList<>();
+    @OneToMany(mappedBy = "pozicija", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Prijava> prijave;
+
 
     // Constructors
     public Pozicije() {}

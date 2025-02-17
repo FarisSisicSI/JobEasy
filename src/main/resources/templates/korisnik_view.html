@@ -136,7 +136,10 @@
       <th>Naziv pozicije</th>
       <th>Firma</th>
       <th>Zanimanje</th>
+      <th>Datum Do</th>
+      <th>Datum prijave</th>
       <th>Status</th>
+      <th>Radnje</th>
     </tr>
     </thead>
     <tbody>
@@ -144,6 +147,17 @@
       <td th:text="${prijava.pozicija.nazivPozicije}"></td>
       <td th:text="${prijava.pozicija.firma.naziv}"></td>
       <td th:text="${prijava.pozicija.zanimanje.naziv}"></td>
+      <td th:text="${prijava.pozicija.datumDo}"></td>
+      <td th:text="${prijava.datumPrijave}"></td>
+      <td class="d-flex justify-content-center gap-2">
+        <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
+        <div th:if="${prijavljenePozicije != null and prijavljenePozicije.containsKey(pozicija.id)}">
+          <form th:action="@{/prijave/ponistiprijavu}" method="post">
+            <input type="hidden" name="pozicijaId" th:value="${pozicija.id}">
+            <button type="submit" class="btn btn-outline-danger btn-sm">Poništi prijavu</button>
+          </form>
+        </div>
+      </td>
       <td>Nema</td>
     </tr>
     </tbody>
