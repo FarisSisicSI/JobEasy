@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>JobEasy - Moj Profil</title>
+  <title>JobEasy - Profil Firme</title>
   <link rel="icon" type="image/png" th:href="@{/css/favicon.png}">
+
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}"/>
+
 </head>
 <style>
 
@@ -71,6 +74,7 @@
     margin-top: 15px;
   }
 </style>
+<body>
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
@@ -82,7 +86,8 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav d-flex align-items-center gap-2">
         <li class="nav-item">
-          <a th:href="@{/korisnici/profil}" class="btn btn-outline-info ">Moj profil</a>
+          <a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/korisnici/profil}" class="btn btn-info">Moj profil</a>
+          <a th:if="${#authorization.expression('hasRole(''ROLE_FIRMA'')')}" th:href="@{/firma/profil}" class="btn btn-info">Moj profil</a>
         </li>
         <li class="nav-item">
           <button class="Btn d-flex align-items-center">
@@ -100,7 +105,6 @@
     </div>
   </div>
 </nav>
-<body>
 
 <div class="container profile-container mt-5">
   <div class="row justify-content-center">
@@ -109,18 +113,14 @@
       <div class="card profile-card">
         <div class="card-body p-4">
           <ul class="list-group list-group-flush text-center">
-            <li class="list-group-item"><strong>Ime:</strong> <span th:text="${korisnik.ime}"></span></li>
-            <li class="list-group-item"><strong>Prezime:</strong> <span th:text="${korisnik.prezime}"></span></li>
-            <li class="list-group-item"><strong>Email:</strong> <span th:text="${korisnik.email}"></span></li>
-            <li class="list-group-item"><strong>Broj telefona:</strong> <span th:text="${korisnik.telefon}"></span></li>
-            <li class="list-group-item"><strong>Općina:</strong> <span th:text="${korisnik.opcina.naziv}"></span></li>
-            <li class="list-group-item"><strong>Adresa:</strong> <span th:text="${korisnik.adresa}"></span></li>
-          </ul>
-          <div class="profile-actions">
-            <a th:if="${korisnik.cvFile != null and not #strings.isEmpty(korisnik.cvFile)}"
-               th:href="@{'/cv/' + ${korisnik.cvFile}}" target="_blank" class="btn btn-outline-success btn-sm">Pogledaj CV</a>
-            <a th:href="@{/korisnici/edit/{id}(id=${korisnik.id})}" class="btn btn-outline-warning btn-sm">Uredi</a>
-          </div>
+        <li class="list-group-item"><strong>Naziv:</strong> <span th:text="${firma.naziv}"></span></li>
+        <li class="list-group-item"><strong>Adresa:</strong> <span th:text="${firma.adresa}"></span></li>
+        <li class="list-group-item"><strong>Općina:</strong> <span th:text="${firma.opcina.naziv}"></span></li>
+        <li class="list-group-item"><strong>Kontakt Osoba:</strong> <span th:text="${firma.kontaktOsoba}"></span></li>
+        <li class="list-group-item"><strong>Telefon:</strong> <span th:text="${firma.telefon}"></span></li>
+        <li class="list-group-item"><strong>Mobilni:</strong> <span th:text="${firma.mobilni}"></span></li>
+        <li class="list-group-item"><strong>Email:</strong> <span th:text="${firma.email}"></span></li>
+      </ul>
         </div>
       </div>
     </div>
@@ -129,35 +129,35 @@
 
 
 <div class="container mt-5">
-  <h3 class="text-center">Pozicije na koje ste se prijavili</h3>
+  <h3 class="text-center">Objavljene pozicije</h3>
   <table class="table table-hover text-center">
     <thead>
     <tr>
-      <th>Naziv pozicije</th>
-      <th>Firma</th>
-      <th>Zanimanje</th>
+      <th>Naziv Pozicije</th>
       <th>Datum Do</th>
-      <th>Datum prijave</th>
-      <th>Status</th>
+      <th>Pregled Aplikanata</th>
       <th>Radnja</th>
     </tr>
+
     </thead>
     <tbody>
-    <tr th:each="prijava : ${prijavljenePozicije}">
-      <td th:text="${prijava.pozicija.nazivPozicije}"></td>
-      <td th:text="${prijava.pozicija.firma.naziv}"></td>
-      <td th:text="${prijava.pozicija.zanimanje.naziv}"></td>
-      <td th:text="${prijava.pozicija.datumDo}"></td>
-      <td th:text="${prijava.datumPrijave}"></td>
-      <td>Nema</td>
-      <td class="d-flex justify-content-center gap-2">
-        <a th:href="@{/pozicije/{id}(id=${prijava.pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
+    <tr th:each="pozicija : ${objavljenePozicije}">
+      <td th:text="${pozicija.nazivPozicije}"></td>
+      <td th:text="${pozicija.datumDo}"></td>
+      <td>
+        <a th:href="@{'/pozicije/korisnici/prijavljeni/' + ${pozicija.id}}" class="btn btn-outline-light btn-sm">Pregled</a>
       </td>
+      <td>
+        <div class="d-flex justify-content-center gap-2">
+        <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
+        <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" class="btn btn-outline-warning btn-sm">Uredi</a>
+        <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" class="btn btn-outline-danger btn-sm">Izbriši</a>
+        </div>
+      </td>
+
     </tr>
     </tbody>
   </table>
 </div>
-
-
 </body>
 </html>

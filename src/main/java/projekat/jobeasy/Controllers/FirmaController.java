@@ -1,14 +1,20 @@
 package projekat.jobeasy.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import projekat.jobeasy.Models.Firma;
+import projekat.jobeasy.Models.Pozicije;
+import projekat.jobeasy.Security.CustomUserDetails;
 import projekat.jobeasy.Services.FirmaService;
 import projekat.jobeasy.Services.OpcinaService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import projekat.jobeasy.Services.PozicijaService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -18,11 +24,12 @@ public class FirmaController {
     private final FirmaService firmaService;
     private final OpcinaService opcinaService;
     private final BCryptPasswordEncoder passwordEncoder;
-
+    private final PozicijaService pozicijaService;
     @Autowired
-    public FirmaController(FirmaService firmaService, OpcinaService opcinaService) {
+    public FirmaController(FirmaService firmaService, OpcinaService opcinaService, PozicijaService pozicijaService) {
         this.firmaService = firmaService;
         this.opcinaService = opcinaService;
+        this.pozicijaService = pozicijaService;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -93,4 +100,25 @@ public class FirmaController {
         firmaService.sacuvajFirmu(firma);
         return "redirect:/firma";
     }
+
+    @GetMapping("/profil")
+    public String prikaziProfilFirme(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof CustomUserDetails userDetails)) {
+            return "redirect:/login";
+        }
+
+        Long firmaId = userDetails.getId();
+        Firma firma = firmaService.pronadjiFirmuId(firmaId).orElse(null);
+
+        if (firma == null) {
+            return "redirect:/login";
+        }
+        List<Pozicije> objavljenePozicije = pozicijaService.findByFirma(firma);
+        model.addAttribute("firma", firma);
+        model.addAttribute("objavljenePozicije", objavljenePozicije);
+
+        return "firma_view";
+    }
+
 }

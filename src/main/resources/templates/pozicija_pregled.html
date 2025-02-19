@@ -89,7 +89,8 @@
             <li class="list-group-item"><strong>Trajanje:</strong> Od: <span th:text="${pozicija.datumOd}"></span> Do: <span th:text="${pozicija.datumDo}"></span></li>
           </ul>
           <div class="profile-actions text-center mt-3">
-            <a href="/welcome" class="btn btn-outline-warning ">Nazad</a>
+            <a href="javascript:history.back()" class="btn btn-outline-warning">Nazad</a>
+
 
             <div th:if="${prijavljenePozicije != null and prijavljenePozicije.containsKey(pozicija.id)}">
               <form th:action="@{/prijave/ponistiprijavu}" method="post">

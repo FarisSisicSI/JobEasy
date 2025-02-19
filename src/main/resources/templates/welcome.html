@@ -133,8 +133,14 @@
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav d-flex align-items-center gap-2">
+        <li>
+          <a class="nav-link" th:href="@{/pozicije/novapozicija}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}">
+            <button class="btn btn-outline-success" type="button"><b>Nova pozicija</b></button>
+          </a>
+        </li>
         <li class="nav-item">
-          <a th:href="@{/korisnici/profil}" class="btn btn-info">Moj profil</a>
+          <a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/korisnici/profil}" class="btn btn-outline-info">Moj profil</a>
+          <a th:if="${#authorization.expression('hasRole(''ROLE_FIRMA'')')}" th:href="@{/firma/profil}" class="btn btn-outline-info">Moj profil</a>
         </li>
         <li class="nav-item">
           <button class="Btn d-flex align-items-center">
@@ -202,45 +208,33 @@
 
 
 <div class="container mt-5" th:if="${#authorization.expression('hasRole(''ROLE_FIRMA'')')}">
-  <div class="table-container">
+
+
     <table class="table table-hover text-center">
-      <div class="d-flex justify-content-end mb-3">
-        <a class="nav-link" th:href="@{/pozicije/novapozicija}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_FIRMA'')')}">
-          <button class="btn btn-outline-success btn-sm mx-1" type="button"><b>Nova pozicija</b></button>
-        </a>
-      </div>
+
       <thead>
       <tr>
         <th>Naziv pozicije</th>
+        <th>Firma</th>
         <th>Zanimanje</th>
-        <th>Kratak opis</th>
-        <th>Datum od</th>
         <th>Datum do</th>
         <th>Radnja</th>
-        <th>Pregled Aplikanata</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="pozicija : ${pozicije}">
         <td th:text="${pozicija.nazivPozicije}"></td>
+        <td th:text="${pozicija.firma.naziv}"></td>
         <td th:text="${pozicija.zanimanje.naziv}"></td>
-        <td th:text="${pozicija.kratakOpisPozicije}"></td>
-        <td th:text="${pozicija.datumOd}"></td>
         <td th:text="${pozicija.datumDo}"></td>
-        <td>
-          <div class="d-flex justify-content-center gap-2">
-            <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
-            <a th:href="@{/pozicije/edit/{id}(id=${pozicija.id})}" class="btn btn-outline-warning btn-sm">Uredi</a>
-            <a th:href="@{/pozicije/delete/{id}(id=${pozicija.id})}" class="btn btn-outline-danger btn-sm">Izbriši</a>
-          </div>
-        </td>
-        <td>
-          <a th:href="@{'/pozicije/korisnici/prijavljeni/' + ${pozicija.id}}" class="btn btn-outline-light btn-sm">Pregled</a>
+        <td class="d-flex justify-content-center gap-2">
+          <a th:href="@{/pozicije/{id}(id=${pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
+
         </td>
       </tr>
       </tbody>
     </table>
-  </div>
+
 </div>
 
 
@@ -250,10 +244,6 @@
 
 
 <div class="table-container" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-  <div id="alert-box" class="alert alert-dismissible fade show text-center d-none" role="alert">
-    <span id="alert-message"></span>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
 
   <table class="table table-hover text-center">
     <div class="d-flex justify-content-end mb-3">
@@ -293,16 +283,7 @@
 
 
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has("success")) {
-      alert(params.get("success"));
-    } else if (params.has("error")) {
-      alert(params.get("error"));
-    }
-  });
-</script>
+
 
 </body>
 </html>
