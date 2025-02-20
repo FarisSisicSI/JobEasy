@@ -34,6 +34,10 @@ public class PrijavaService {
         return prijavaRepository.findById(id);
     }
 
+    public Prijava findById(Long id) {
+        return prijavaRepository.findById(id).orElse(null);
+    }
+
     public Prijava spasiPrijavu(Long korisnikId, Long pozicijaId) {
         Korisnici korisnik = korisniciRepository.findById(korisnikId)
                 .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));

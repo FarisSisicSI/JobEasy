@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jobeasy - Intervju Forma</title>
+</head>
+<body>
+<h2>Zakazivanje intervjua za <span th:text="${prijava.korisnik.ime}"></span></h2>
+
+<form th:action="@{/intervju/sacuvaj}" method="post">
+    <input type="hidden" name="prijavaId" th:value="${prijava.id}"/>
+    <label>Datum:</label>
+    <input type="date" name="datum" required/><br>
+
+    <label>Vrijeme:</label>
+    <input type="time" name="vrijeme" required/><br>
+
+    <label>Mjesto:</label>
+    <input type="text" name="mjesto" required/><br>
+
+    <label>Komentar:</label>
+    <textarea name="komentar"></textarea><br>
+
+    <button type="submit">Zakaži intervju</button>
+</form>
+</body>
+</html>

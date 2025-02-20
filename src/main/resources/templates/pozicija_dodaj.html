@@ -62,7 +62,7 @@
             <label for="kratakOpisPozicije">Kratak opis:</label>
             <textarea th:field="*{kratakOpisPozicije}" id="kratakOpisPozicije" class="form-control" rows="3" required></textarea>
         </div>
-        <!-- Ako je ulogovana firma, automatski postavi njen ID i sakrij polje -->
+
         <input type="hidden" th:if="${#authorization.expression('hasRole(''ROLE_FIRMA'')')}" th:field="*{firma}" th:value="${#authentication.principal.id}" />
 
         <!-- Ako je admin, prikaži dropdown da bira firmu -->
