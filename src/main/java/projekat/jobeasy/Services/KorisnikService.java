@@ -38,6 +38,11 @@ public class KorisnikService implements UserDetailsService {
         return korisniciRepository.findById(id);
     }
 
+    public Korisnici findById(Long id) {
+        Optional<Korisnici> korisnik = korisniciRepository.findById(id);
+        return korisnik.orElse(null);
+    }
+
     public void izbrisiKorisnika(Long id) {
         korisniciRepository.deleteById(id);
     }

@@ -40,4 +40,10 @@ public class Prijava {
         this.datumPrijave = LocalDate.now();
         this.status = 1;
     }
+
+
+    public Firma getFirma() {
+        return this.pozicija.getFirma();
+    }
+
 }

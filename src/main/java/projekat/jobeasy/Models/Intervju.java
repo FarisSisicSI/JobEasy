@@ -32,6 +32,19 @@ public class Intervju {
     @JoinColumn(name = "id_prijave", nullable = false)
     private Prijava prijava;
 
+
+    public Intervju(Prijava prijava, Korisnici korisnik, LocalDate datum, LocalTime vrijeme, String mjesto, String komentar) {
+        this.prijava = prijava;
+        this.korisnik = korisnik;
+        this.datum = datum;
+        this.vrijeme = vrijeme;
+        this.mjesto = mjesto;
+        this.komentar = komentar;
+    }
+    public Intervju() {
+    }
+
+
     // Getteri i setteri
     public Long getId() {
         return id;
