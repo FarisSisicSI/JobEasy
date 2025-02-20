@@ -96,10 +96,12 @@
                        target="_blank">Pogledaj</a>
                 </td>
                 <td>
-                    <a th:href="@{/intervju/zakazi/{prijavaId}(prijavaId=${prijava.id})}"
-                       class="btn btn-outline-success btn-sm">Prihvaćen</a>
+                    <form th:action="@{/prijave/prihvati/{prijavaId}(prijavaId=${prijava.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-outline-success btn-sm">Prihvaćen</button>
+                    </form>
                     <a href="#" class="btn btn-outline-danger btn-sm">Odbijen</a>
                 </td>
+
             </tr>
             </tbody>
         </table>

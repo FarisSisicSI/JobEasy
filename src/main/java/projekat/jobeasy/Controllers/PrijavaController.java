@@ -109,6 +109,17 @@ public class PrijavaController {
         return "redirect:/welcome?success=Uspjesno ste ponistili prijavu!";
     }
 
+    @PostMapping("/prijave/prihvati/{prijavaId}")
+    public String prihvatiPrijavu(@PathVariable Long prijavaId) {
+        Prijava prijava = prijavaRepository.findById(prijavaId)
+                .orElseThrow(() -> new RuntimeException("Prijava nije pronađena"));
+
+        prijava.setStatus(2);
+        prijavaRepository.save(prijava);
+
+        return "redirect:/intervju/zakazi/" + prijavaId;
+    }
+
 
 
 

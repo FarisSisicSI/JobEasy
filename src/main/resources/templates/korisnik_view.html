@@ -149,7 +149,12 @@
       <td th:text="${prijava.pozicija.zanimanje.naziv}"></td>
       <td th:text="${prijava.pozicija.datumDo}"></td>
       <td th:text="${prijava.datumPrijave}"></td>
-      <td>Nema</td>
+      <td th:switch="${prijava.status}">
+        <span th:case="1">U procesu</span>
+        <span th:case="2">Prihvaćen</span>
+        <span th:case="3">Odbijen</span>
+      </td>
+
       <td class="d-flex justify-content-center gap-2">
         <a th:href="@{/pozicije/{id}(id=${prijava.pozicija.id})}" class="btn btn-outline-light btn-sm">Pregled</a>
       </td>

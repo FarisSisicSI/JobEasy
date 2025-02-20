@@ -1,27 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Jobeasy - Intervju Forma</title>
+    <title>JobEasy - Zakazivanje Intervjua</title>
+    <link rel="icon" type="image/png" th:href="@{/css/favicon.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/customDugme.css}"/>
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .form-container label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .form-container .form-control {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            transition: box-shadow 0.2s ease-in-out;
+        }
+
+        .form-container .form-control:focus {
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+            border-color: #80bdff;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
 </head>
 <body>
-<h2>Zakazivanje intervjua za <span th:text="${prijava.korisnik.ime}"></span></h2>
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/welcome}">Početna</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <button class="btn btn-light btn-sm mx-1" type="button">
+                        <a class="nav-link" th:href="@{/korisnici}">Pregled korisnika</a>
+                    </button>
+                </li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <button class="btn btn-light btn-sm mx-1" type="button">
+                        <a class="nav-link" th:href="@{/firma}">Pregled firmi</a>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="Btn">
+                        <div class="sign">
+                            <svg viewBox="0 0 512 512">
+                                <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                            </svg>
+                        </div>
+                        <div class="text">
+                            <a class="nav-link" style="color:white;" th:href="@{/logout}">Odjava</a>
+                        </div>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<form th:action="@{/intervju/sacuvaj}" method="post">
-    <input type="hidden" name="prijavaId" th:value="${prijava.id}"/>
-    <label>Datum:</label>
-    <input type="date" name="datum" required/><br>
+<div class="form-container">
+    <h1>Zakazivanje intervjua za <span th:text="${prijava.korisnik.ime}"></span></h1>
+    <form th:action="@{/intervju/sacuvaj}" method="post">
+        <input type="hidden" name="prijavaId" th:value="${prijava.id}"/>
 
-    <label>Vrijeme:</label>
-    <input type="time" name="vrijeme" required/><br>
+        <div class="form-group mb-3">
+            <label for="datum">Datum:</label>
+            <input type="date" id="datum" name="datum" class="form-control" required/>
+        </div>
 
-    <label>Mjesto:</label>
-    <input type="text" name="mjesto" required/><br>
+        <div class="form-group mb-3">
+            <label for="vrijeme">Vrijeme:</label>
+            <input type="time" id="vrijeme" name="vrijeme" class="form-control" required/>
+        </div>
 
-    <label>Komentar:</label>
-    <textarea name="komentar"></textarea><br>
+        <div class="form-group mb-3">
+            <label for="mjesto">Lokacija:</label>
+            <input type="text" id="mjesto" name="mjesto" class="form-control" required/>
+        </div>
 
-    <button type="submit">Zakaži intervju</button>
-</form>
+        <div class="form-group mb-3">
+            <label for="komentar">Komentar:</label>
+            <textarea id="komentar" name="komentar" class="form-control"></textarea>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-outline-success" type="submit">Zakaži intervju</button>
+        </div>
+    </form>
+</div>
+
+
 </body>
 </html>
