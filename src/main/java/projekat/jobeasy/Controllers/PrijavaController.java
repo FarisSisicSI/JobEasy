@@ -70,7 +70,7 @@ public class PrijavaController {
             Pozicije pozicija = optionalPozicija.get();
             model.addAttribute("pozicija", pozicija);
 
-            // Proveravamo prijave korisnika
+
             Korisnici korisnik = korisnikRepository.findByUsername(userDetails.getUsername())
                     .orElse(null);
 
@@ -82,7 +82,7 @@ public class PrijavaController {
                 }
             }
 
-            // Ako je mapa prazna, dodajemo je u model da ne bude null
+            
             model.addAttribute("prijavljenePozicije", prijavljenePozicije.isEmpty() ? new HashMap<>() : prijavljenePozicije);
         }
 
