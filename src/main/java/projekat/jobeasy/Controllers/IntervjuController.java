@@ -72,15 +72,24 @@ public class IntervjuController {
 
         intervjuService.save(intervju);
 
+        // Dobavljanje podataka iz prijave
         String kandidatEmail = prijava.getKorisnik().getEmail();
         String firmaEmail = prijava.getFirma().getEmail();
         String kandidatIme = prijava.getKorisnik().getIme() + " " + prijava.getKorisnik().getPrezime();
+        String pozicija = prijava.getPozicija().getNazivPozicije();  // Dodano: dobavljanje naziva pozicije
+        String firma = prijava.getFirma().getNaziv();     // Dodano: dobavljanje naziva firme
+
+// E-mail za korisnika
+        emailService.sendInterviewEmail(kandidatEmail, "Zakazan intervju", kandidatIme, pozicija, firma, datum, vrijeme, mjesto, komentar, false);
+
+// E-mail za firmu
+        emailService.sendInterviewEmail(firmaEmail, "Potvrda zakazanog intervjua", kandidatIme, pozicija, null, datum, vrijeme, mjesto, komentar, true);
 
         // E-mail za korisnika
-        emailService.sendInterviewEmail(kandidatEmail, "Zakazan intervju", kandidatIme, datum, vrijeme, mjesto, komentar, false);
+        emailService.sendInterviewEmail(kandidatEmail, "Zakazan intervju", kandidatIme, pozicija, firma, datum, vrijeme, mjesto, komentar, false);
 
         // E-mail za firmu
-        emailService.sendInterviewEmail(firmaEmail, "Potvrda zakazanog intervjua", kandidatIme, datum, vrijeme, mjesto, komentar, true);
+        emailService.sendInterviewEmail(firmaEmail, "Potvrda zakazanog intervjua", kandidatIme, pozicija, null, datum, vrijeme, mjesto, komentar, true);
 
         redirectAttributes.addFlashAttribute("success", "Intervju je uspešno zakazan i e-mailovi su poslati.");
         return "redirect:/welcome";
